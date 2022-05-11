@@ -1,0 +1,150 @@
+.header-toggle {
+  position: inherit;
+}
+.acc-nav {
+  font-size: 14px;
+  margin-bottom: 0px;
+}
+ul.navbar-nav.navbar-nav-right li {
+  display: inline-block;
+  padding: 0px 10px;
+}
+.accordion-body ul li a {
+  padding: 10px 15px;
+}
+.accordion-body ul {
+  margin-left: 35px;
+}
+h2.acc-nav button {
+  background: white;
+  border: none;
+  width: 100%;
+  text-align: left;
+  color: rgb(255, 255, 255);
+  height: 45px;
+  padding: 10px 15px;
+}
+.acc-anchr{
+    color: white;
+}
+.accordion-body li {
+  display: inline-block;
+  width: 100%;
+}
+li.nav-item::marker {
+  content: "";
+}
+.accordion-item li a {
+  color: #6c7383;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.accordion-item li a i {
+  margin-right: 10px;
+}
+button#dropdown-basic:after {
+  display: none;
+}
+button#dropdown-basic {
+  padding: 15px 0px;
+  border: none !important;
+}
+li.nav-item.nav-profile.dropdown ul li a {
+  color: black;
+  text-decoration: none;
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.sub-card {
+  border-radius: 1.25rem !important;
+  border: none !important;
+}
+.card-sub-title{
+    font-weight: 400 !important;  
+}
+.view-sec{
+    text-decoration: none;
+}
+.acc-item{
+    border: none!important;
+}
+button.btn.bg-transparent:focus {
+    box-shadow: none;
+}
+button.btncss {
+    border-radius: 7px;
+    width: 9%;
+    padding: 8px;
+    text-align: right;
+}
+button.btncss:focus {
+    box-shadow: none;
+}
+.mb-3.mt-3.row.rowdiv {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+span.heading {
+    font-weight: 400;
+    color: #198754;
+    font-size: 28px;
+    width: auto;
+}
+form.myFormCss {
+    width: 100%;
+    max-width: 52%;
+}
+.main-panel.formalign {
+    align-items: center;
+    margin-top: 52px;
+}
+a.anchrcolor {
+    text-decoration: none;
+    color: red;
+    width: auto;
+}
+a.anchrcolor:hover {
+    text-decoration: none;
+    color: #fff;
+}
+.navbar-nav .dropdown-menu {
+    inset: 0px 0px auto auto !important;
+}
+
+button.btn.bg-transparent:focus {
+  box-shadow: none;
+}
+
+.imgCss {
+  width: 79px !important;
+  height: 53px !important;
+  border-radius: 0px !important;
+}
+.dropdown-toggle.btn:focus{
+    box-shadow: none;
+    outline: 0;
+}
+.MuiFormControl-root.MuiTextField-root.css-xorm6h-MuiFormControl-root-MuiTextField-root {
+  width: 100%;
+  padding: 12px;
+}
+.MuiFormControl-root.MuiTextField-root.css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+  width: 100%;
+  padding: 12px;
+}
+.btndesign{
+  text-align: center;
+  margin-top: 15px;
+}
+.inputcss{
+  margin-bottom: 20px;
+    border: none;
+    padding: 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.26);
+}

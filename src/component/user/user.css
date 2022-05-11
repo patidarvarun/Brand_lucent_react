@@ -1,0 +1,568 @@
+.banner {
+  position: absolute;
+  top: 15em;
+  left: 7rem;
+  color: #998c8c;
+  font-weight: 800;
+}
+.bannerHeading {
+  position: absolute;
+  top: 9.8em;
+  left: 4.6em;
+  font-size: x-large;
+  color: black;
+}
+.bannerHeading1 {
+  position: absolute;
+  top: 11em;
+  left: 4.6em;
+  font-size: x-large;
+  color: black;
+}
+.mainb {
+  position: "absolute";
+  top: "55px";
+}
+
+.imglogo {
+  position: absolute;
+  width: 163px;
+  height: 50px;
+  top: 5em;
+  left: 9em;
+}
+.row1 {
+  display: flex;
+  float: left !important;
+}
+
+.column1 {
+  flex: 16%;
+  padding: 5px;
+}
+
+.catfooter {
+  font-size: 20px;
+  color: #080808;
+  text-align: center;
+  padding: 12px;
+}
+.menuButton1 {
+  background: none !important;
+  width: 6.3em !important;
+  border: 2px solid white !important;
+  color: rgb(0, 0, 0) !important;
+}
+.menuButton2 {
+  background: white !important;
+  width: 6.3em !important;
+  border: none !important;
+  color: black !important;
+}
+.menuButton3 {
+  background: none !important;
+  width: 6.3em !important;
+  border: 2px solid white !important;
+  color: red !important;
+}
+.headerLabel {
+  display: flex;
+  position: absolute;
+  top: 10px;
+  left: 42em;
+  color: black;
+}
+.linkHead {
+  color: black !important;
+  text-decoration: none !important;
+}
+.sellfooter {
+  font-size: 20px;
+  color: #000000;
+  text-align: center;
+}
+.sellfooter2 {
+  font-size: 20px;
+  color: #7f7a7a;
+  text-align: center;
+  text-decoration: line-through;
+}
+.newletter {
+  position: absolute;
+  top: 65.5em;
+  left: 35.6em;
+  font-size: x-large;
+  font-weight: bolder;
+  color: black;
+}
+.newletter1 {
+  position: absolute;
+  top: 67em;
+  left: 35.6em;
+  font-size: x-large;
+  font-weight: bolder;
+  color: black;
+}
+.news {
+  position: absolute;
+  top: 120.6em;
+  left: 61.2em;
+  color: #4e4545;
+  font-weight: 600;
+}
+.inputt {
+  position: absolute;
+  top: 123.6em;
+  left: 59.8em;
+  height: 3.6em;
+  width: 28em;
+  border-radius: 34px;
+  background: #e5dfdf;
+  border: none;
+  padding: 25px;
+}
+.services {
+  max-width: 24%;
+  display: inline-block;
+  flex: 0 0 24%;
+}
+.footer-inner {
+  display: flex;
+  width: 1160px;
+  margin: 0 auto;
+  margin-top: 5em;
+  margin-bottom: 5em;
+}
+.textColor {
+  color: white;
+}
+.textColor1 {
+  color: #cfcdcd;
+  font-size: x-large;
+}
+
+.terms {
+  position: absolute;
+  display: flex;
+  top: 143em;
+  left: 14.9em;
+}
+
+.footerImage {
+  position: absolute;
+  top: -16em;
+  left: 57em;
+}
+.iconColor {
+  color: white;
+}
+.imogi {
+  position: absolute;
+  left: 62em;
+  display: flex;
+}
+.terms1 {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+.footer-main {
+  max-width: 1160px;
+  margin: 0 auto;
+}
+.makeStyles-toolbar-4 {
+  max-width: 1260px;
+}
+@media only screen and (max-width: 600px) {
+  .footer-inner {
+    width: 100%;
+    padding: 0 15px;
+  }
+  .services {
+    max-width: 100%;
+    flex: 0 0 100%;
+    display: block;
+  }
+  .terms1 {
+    display: inline-block;
+    width: 100%;
+    justify-content: space-around;
+    padding-bottom: 80px;
+    margin-bottom: 200px;
+    padding: 0 15px;
+  }
+}
+.content-wrapper1 {
+  width: 100%;
+  flex-grow: 1;
+}
+.main-panel1 {
+  transition: width 0.25s ease, margin 0.25s ease;
+  min-height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+}
+
+.newletterUser {
+  /* display: inline-block; */
+  font-size: x-large;
+  font-weight: bolder;
+  color: black;
+  margin-left: 23em;
+}
+.newletterUser1 {
+  display: inline-block;
+  font-size: x-large;
+  font-weight: bolder;
+  color: black;
+  margin-left: 22.5em;
+}
+.Neww {
+  display: flex;
+}
+.Cattname {
+  font-size: 1.5rem;
+  text-align: left;
+  margin-left: -250px;
+  color: #877c7c;
+}
+.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-2.MuiGrid-spacing-md-3.css-1xgjpwf-MuiGrid-root {
+  text-align: center;
+}
+.productHead {
+  font-size: 25px;
+  padding: 8px;
+  color: #504a4a;
+}
+.buttIcon {
+  border: none;
+  background: none;
+}
+.borderr {
+  border: 1px solid #56ad56;
+  border-radius: 33px;
+  padding: 3px;
+  width: fit-content;
+}
+.cartHead {
+  color: rgb(104, 143, 78);
+}
+.borderCart {
+  border: 1px solid rgb(104, 143, 78);
+  border-radius: 30px;
+}
+button.detailPro {
+  border: none;
+  background: rgb(104, 143, 78);
+  color: white;
+  height: 41px;
+  padding: 10px;
+  border-radius: 5px;
+  width: 123px;
+}
+.checkout {
+  border: none;
+  background: rgb(104, 143, 78);
+  color: white;
+  width: 180px;
+  height: 52px;
+  padding: 10px;
+  border-radius: 5px;
+}
+.cartPrice {
+  font-size: larger;
+}
+.cartLink {
+  color: rgb(104, 143, 78);
+}
+.cartClose {
+  border: none;
+  background: none;
+  font-size: 30px;
+  margin-left: 16.5em !important;
+}
+.cartArrow {
+  font-size: 37px;
+  margin-bottom: 5px;
+}
+.cartUnderline {
+  color: black !important;
+  text-decoration: none;
+}
+.cartSdiv {
+  border: 1px solid rgb(160 201 132);
+  border-radius: 9px;
+  background-color: #d4dfc4;
+  padding: 30px;
+  width: fit-content;
+}
+.borderCart2 {
+  border: 1px solid rgb(104, 143, 78);
+  border-radius: 68px;
+  width: 189px;
+  height: 50px;
+}
+.pname {
+  font-size: 18px;
+}
+.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-9.css-trcag1-MuiGrid-root {
+  padding-left: 69px;
+  padding-top: 46px;
+}
+.cartdiv {
+  border: 1px solid rgb(160 201 132);
+  padding: 10px;
+}
+.cartCheckout {
+  border: none;
+  background: rgb(104, 143, 78) !important;
+  width: 143px;
+  height: 47px;
+  border-radius: 7px;
+  color: white;
+}
+.pLeft {
+  text-align: left;
+  font-size: x-large;
+  padding: 20px;
+}
+.pRight {
+  text-align: right !important;
+  margin-left: 99px;
+  font-size: x-large;
+  padding: 20px;
+}
+.checkoutLink {
+  text-decoration: none;
+  color: white;
+}
+
+svg.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.MuiStepIcon-root.Mui-completed.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root {
+  color: #b1d182;
+}
+svg.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.MuiStepIcon-root.Mui-active.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root {
+  color: #b1d182;
+}
+.feildcss {
+  padding: 15px;
+  height: 4em;
+  border: 1px solid #6eaeed !important;
+}
+.leftCss {
+  justify-content: left !important;
+}
+.backgroundcolorr {
+  background: none !important;
+  border: none;
+}
+.d-flex.justify-content-center.mx-4.mb-3.mb-lg-4 {
+  margin-right: 15.5 rem !important;
+  margin-left: -0.5 rem !important;
+}
+
+.col-md-10.col-lg-6.col-xl-5.order-2.order-lg-1 {
+  margin-top: -70px;
+}
+span.MuiStepLabel-label.Mui-completed.MuiStepLabel-alternativeLabel.css-qivjh0-MuiStepLabel-label {
+  font-size: larger;
+  font-weight: 600;
+}
+span.MuiStepLabel-label.Mui-active.MuiStepLabel-alternativeLabel.css-qivjh0-MuiStepLabel-label {
+  font-size: larger;
+  font-weight: 600;
+}
+span.MuiStepLabel-label.Mui-disabled.MuiStepLabel-alternativeLabel.css-qivjh0-MuiStepLabel-label {
+  font-size: larger;
+  font-weight: 600;
+}
+.sidebarColor {
+  padding: 25px;
+  background: #e4fdf9;
+  margin-top: 5em;
+  height: 45em;
+}
+a.home {
+  color: white;
+  text-decoration: none !important;
+}
+
+h1.homeHeading {
+  color: #958888;
+  font-size: 30px;
+}
+
+h1.home2Heading {
+  color: #958888;
+  font-size: 30px;
+}
+header.MuiPaper-root.MuiAppBar-root.MuiAppBar-positionFixed.MuiAppBar-colorPrimary.makeStyles-header-1.mui-fixed.MuiPaper-elevation4 {
+  background-color: rgb(255 255 255);
+}
+svg.MuiSvgIcon-root {
+  color: black;
+}
+a.MuiButtonBase-root.MuiButton-root.MuiButton-text.menuButton3.logout {
+  border: 2.5px solid rgb(104, 143, 78) !important;
+}
+a.MuiButtonBase-root.MuiButton-root.MuiButton-text.menuButton2.signUp {
+  border: none !important;
+  background: rgb(104, 143, 78) !important;
+  color: white !important;
+}
+a.MuiButtonBase-root.MuiButton-root.MuiButton-text.menuButton1.login {
+  border: 2.5px solid rgb(104, 143, 78) !important;
+}
+a.navbar-brand.brand-logo.mr-5 {
+  padding: 1px;
+  width: 78px;
+  border: 2px solid rgb(104, 143, 78);
+  color: rgb(0, 0, 0);
+  border-radius: 4px;
+}
+a.withoutLogin {
+  text-decoration: none;
+}
+.newslee {
+  position: relative;
+  top: -23em;
+  left: 25em;
+}
+.subscribee {
+  color: #4e4545;
+  font-weight: 600;
+  margin: 0 195px 12px 0;
+}
+.newlettercss {
+  font-size: x-large;
+  font-weight: bolder;
+  margin: 0 130px 0 0;
+  color: black;
+}
+.newsletterinput {
+  height: 3.6em;
+  width: 32em;
+  border-radius: 34px;
+  background: #f6f6f6;
+  border: none;
+  padding: 25px;
+}
+.bordercss {
+  margin: 0 auto !important;
+  max-width: fit-content !important;
+  padding: 20px !important;
+}
+
+/* .MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-6.css-uwxp2l-MuiGrid-root {
+  margin: 0 auto !important;
+  max-width: fit-content !important;
+
+} */
+.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-6.css-uwxp2l-MuiGrid-root {
+  display: contents;
+}
+.MuiGrid-root.MuiGrid-container.css-11lq3yg-MuiGrid-root {
+  margin-top: 3em;
+}
+.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-4.bordercsscart.css-480o17-MuiGrid-root {
+  margin: 0 auto;
+  max-width: fit-content;
+}
+.err {
+  font-size: 11em;
+  text-align: center;
+  /* margin: 146px; */
+  color: #e7e3e3;
+}
+.err1 {
+  position: relative;
+  top: -1em;
+}
+.errcss {
+  color: white;
+  height: 45px;
+  border-radius: 40px;
+  cursor: pointer;
+  width: 194px;
+  border: solid;
+  background-color: rgb(104, 143, 78);
+}
+.notfound {
+  margin: 0 auto;
+  max-width: fit-content;
+  margin-top: 13em;
+}
+
+h2.paymentHeadingg {
+  text-align: center;
+  color: rgb(104, 143, 78);
+  font-weight: 600;
+}
+p.paymentPera {
+  text-align: center;
+  font-size: large;
+}
+.shoppingPayment {
+  text-align: center;
+}
+.shoppingbutton {
+  background: rgb(104, 143, 78) !important;
+  width: fit-content !important;
+  border: none !important;
+  border-radius: 40px !important;
+  height: 35px !important;
+}
+.checkCircle {
+  text-align: center;
+}
+.circlePayment {
+  color: rgb(104, 143, 78) !important;
+}
+h2.paymentFailedHeadingg {
+  text-align: center;
+  color: rgb(226, 6, 6);
+  font-weight: 600;
+}
+.circleFailedPayment {
+  color: rgb(226, 6, 6) !important;
+}
+button#full-width-tab-0 {
+  border: 1px solid rgb(104, 143, 78) !important;
+  background: rgb(104, 143, 78) !important;
+  border-radius: 44px;
+  color: white;
+}
+button#full-width-tab-1 {
+  border: 1px solid rgb(104, 143, 78) !important;
+  background: rgb(104, 143, 78) !important;
+  border-radius: 44px;
+  color: white;
+}
+.css-11yukd5-MuiTabs-indicator {
+  background-color: transparent !important;
+}
+button#full-width-tab-1 {
+  background: transparent !important;
+  color: rgb(15, 15, 15);
+  margin-left: 10px;
+}
+button#full-width-tab-1.Mui-selected {
+  background: rgb(104, 143, 78) !important;
+  color: white;
+}
+button#full-width-tab-0 {
+  background: transparent !important;
+  color: rgb(15, 15, 15);
+}
+button#full-width-tab-0.Mui-selected {
+  background: rgb(104, 143, 78) !important;
+  color: white;
+}
+.orderPera {
+  text-align: center;
+  font-size: larger;
+}
+.imgorder {
+  text-align: center;
+  margin-top: 50px;
+  overflow: hidden !important;
+}
