@@ -155,17 +155,19 @@ export default function HomeHeader() {
     return headersData.map(({ label, href }) => {
       if (label == "Login") {
         return (
-          <Link
-            {...{
-              component: RouterLink,
-              to: href,
-              color: "inherit",
-              style: { textDecoration: "none" },
-              key: label,
-            }}
-          >
-            <MenuItem>{label}</MenuItem>
-          </Link>
+          <div className="varun">
+            <Link
+              {...{
+                component: RouterLink,
+                to: href,
+                color: "inherit",
+                style: { textDecoration: "none" },
+                key: label,
+              }}
+            >
+              <MenuItem>{label}</MenuItem>
+            </Link>
+          </div>
         );
       } else if (label == "Sign Up") {
         return (
@@ -235,7 +237,7 @@ export default function HomeHeader() {
               )}
             </p>
           ) : (
-            <p style={{ padding: "10px" }}>
+            <p style={{ padding: "10px" }} className="aaa">
               {itemm.labelofheader === "Cart" ? (
                 <a className="linkHead" href="/cart">
                   {itemm.labelofheader}

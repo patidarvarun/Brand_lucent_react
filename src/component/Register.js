@@ -108,7 +108,7 @@ class Register extends Component {
       <div>
         <AppBar />
         <section className="vh-100" style={{ backgroundColor: "#eee" }}>
-          <div className="container h-100" style={{ marginTop: "45px" }}>
+          <div className="container h-100" style={{ marginTop: "70px" }}>
             <div className="row d-flex justify-content-center align-items-center h-100">
               <div className="col-lg-12 col-xl-11">
                 <div
@@ -314,7 +314,7 @@ class Register extends Component {
                                 height: "55px",
                                 position: "absolute",
                                 width: "19.3em",
-                                bottom: " 28em",
+                                bottom: " 26em",
                                 // left: "5.3em",
                               }}
                               className="btn btn-primary "
