@@ -396,7 +396,7 @@ h1.home2Heading {
   font-size: 30px;
 }
 header.MuiPaper-root.MuiAppBar-root.MuiAppBar-positionFixed.MuiAppBar-colorPrimary.makeStyles-header-1.mui-fixed.MuiPaper-elevation4 {
-  background-color: rgb(255 255 255);
+  background-color: rgb(255 255 255) !important;
 }
 svg.MuiSvgIcon-root {
   color: black;
