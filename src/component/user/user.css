@@ -65,13 +65,13 @@
   border: 2px solid white !important;
   color: red !important;
 }
-.headerLabel {
+/* .headerLabel {
   display: flex;
   position: absolute;
   top: 10px;
   left: 42em;
   color: black;
-}
+} */
 .linkHead {
   color: black !important;
   text-decoration: none !important;
@@ -566,3 +566,32 @@ button#full-width-tab-0.Mui-selected {
   margin-top: 50px;
   overflow: hidden !important;
 }
+/* appbar */
+
+.MuiToolbar-root.MuiToolbar-regular.makeStyles-toolbar-4.MuiToolbar-gutters {
+  margin: 0 auto;
+  display: inline-flex;
+  max-width: 1160px;
+}
+.headerLabel {
+  display: flex !important;
+  color: black !important;
+  margin-top: 1em;
+  margin-right: 1em;
+}
+a.MuiButtonBase-root.MuiButton-root.MuiButton-text.menuButton1.login {
+  height: 38px;
+}
+
+@media (min-width: 1400px) {
+  .MuiToolbar-root.MuiToolbar-regular.makeStyles-toolbar-4.MuiToolbar-gutters {
+    max-width: 1340px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+.MuiPaper-elevation4 {
+  box-shadow: none !important;
+}
+
