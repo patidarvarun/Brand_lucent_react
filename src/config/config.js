@@ -1,6 +1,6 @@
 // export const BASE_URL = "http://94.237.3.78:4001";
-export const BASE_URL = "http://localhost:4001";
-// export const BASE_URL = "https://mybrandlucent.herokuapp.com";
+// export const BASE_URL = "http://localhost:4001";
+export const BASE_URL = "https://brandnode.herokuapp.com";
 export const API = {
   register: `${BASE_URL}/api/createUser`,
   login: `${BASE_URL}/api/login`,
