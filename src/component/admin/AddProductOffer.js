@@ -67,22 +67,18 @@ class AddProductOffer extends Component {
 
   getCategories() {
     this.props.CategoriesDetail((res) => {
-      //   console.log("$$$$$$$$$$$$$$$", res.data);
       this.setState({ categoryData: res.data });
     });
   }
   getProductData() {
     this.props.getProduct((res) => {
-      //   console.log("$$$$$$$$$$$$$$$", res.data);
       this.setState({ productData: res.data });
     });
   }
   handleCat(ee) {
-    // console.log("!@@@@@@@@@@@@", ee);
     this.setState({ cat_id: ee._id });
   }
   handlePro(ea) {
-    // console.log("############ea", ea);
     this.setState({ pro_id: ea });
   }
 
@@ -95,7 +91,6 @@ class AddProductOffer extends Component {
       cat_id: this.state.cat_id,
       productId: this.state.pro_id,
     };
-    //   console.log("@@@@@@@@@@@@@@@", data);
     this.props.addprodOffer(data, (res) => {
       if (res.status === 200) {
         toast.success("ProductOffer Added Successfully");
@@ -107,7 +102,6 @@ class AddProductOffer extends Component {
   };
 
   render() {
-    // console.log("!!!!!!!!!!!!!!!!!!", this.state.categoryData);
     return (
       <div className="container-scroller">
         <TopNav />
@@ -135,7 +129,6 @@ class AddProductOffer extends Component {
                       }}
                     >
                       {this.state.categoryData.map((item) => {
-                        // console.log(item._id, "rrr");
                         return (
                           <MenuItem
                             id="cate"
@@ -165,20 +158,20 @@ class AddProductOffer extends Component {
                         minWidth: " -webkit - fill - available !important",
                       }}
                     >
-                      {this.state.productData.map((item) => {
-                        var data = item.cat_id._id == this.state.cat_id;
-                        return data == true ? (
-                          <MenuItem
-                            id="pro"
-                            name="pro"
-                            value={item.name}
-                            onClick={() => this.handlePro(item._id)}
-                            key={item.name}
-                          >
-                            {item.name}
-                          </MenuItem>
-                        ) : null;
-                      })}
+                      {this.state.productData.map((item) => (
+                        // let data = item.cat_id._id == this.state.cat_id;
+                        // return data == true ? (
+                        <MenuItem
+                          id="pro"
+                          name="pro"
+                          value={item.name}
+                          onClick={() => this.handlePro(item._id)}
+                          key={item.name}
+                        >
+                          {item.name}
+                        </MenuItem>
+                        // ) : null;
+                      ))}
                     </Select>
                     <span id="demo2"></span>
                   </>
@@ -222,7 +215,6 @@ class AddProductOffer extends Component {
 }
 
 const mapStateToProps = (store) => {
-  // const { auth, profile } = store;
   return {};
 };
 export default connect(mapStateToProps, {

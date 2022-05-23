@@ -111,7 +111,6 @@ class CategoryDetail extends Component {
               </thead>
               <tbody>
                 {this.state.categoryData.map((item) => {
-                  console.log(item, "rrr");
                   return (
                     <>
                       <Modal

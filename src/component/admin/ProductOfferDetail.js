@@ -28,7 +28,7 @@ class ProductOfferDetail extends Component {
 
   getProductoffers() {
     this.props.getProductDetail((res) => {
-      console.log("$$$$$$$$$$$$$$$", res.data);
+      // console.log("$$$$$$$$$$$$$$$", res.data);
       this.setState({ productDataOffer: res.data });
     });
   }
@@ -46,7 +46,7 @@ class ProductOfferDetail extends Component {
 
   edit(data) {
     this.setState({ productDetail: data });
-    console.log("@@@@@@@@@@@@@@@@data", data);
+    // console.log("@@@@@@@@@@@@@@@@data", data);
     this.handleOpen();
   }
   handleOpen = () => this.setState({ open: true });
@@ -111,9 +111,9 @@ class ProductOfferDetail extends Component {
                   <th scope="col">Delete</th>
                 </tr>
               </thead>
+
               <tbody>
                 {this.state.productDataOffer.map((item) => {
-                  console.log(item, "rrr");
                   return (
                     <>
                       <Modal

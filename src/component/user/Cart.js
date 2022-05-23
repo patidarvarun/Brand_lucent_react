@@ -54,11 +54,12 @@ const Cart = () => {
   );
   const [cartData, setCartData] = useState([]);
   const [allData, setAllData] = useState([]);
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
 
   const dispatch = useDispatch();
   let tempPrice = 0;
   let price = 0;
+  let initialQuantity = 0;
   const getCartDetail = async () => {
     const id = localStorage.getItem("localId");
     const response = await axios
@@ -66,7 +67,6 @@ const Cart = () => {
         headers: authHeader(),
       })
       .catch((err) => {});
-    // console.log("@@@@@@@@@@@@@@@response", response);
     setCartData(response.data);
     setAllData(response.data.productOfCart);
     dispatch(getCart(response.data));
@@ -90,34 +90,82 @@ const Cart = () => {
           : toast.warn("Something went wrong..")
       );
   };
-  function increaseQuantity(id) {
-    console.log("@@@@@@@@@@@@@@@@", id);
-    // const divId = document.getElementById(id);
-    // divId.textContent = count;
-    if (id != null) {
-      setCount(count + 1);
-    } else {
-    }
-    // product.filter((idd) => (id == idd._id ? setIdd(idd._id) : ""));
-    // product.filter((idd) =>
-    //   id == idd._id ? setCount(count + 1) : console.log("AAAAAA")
-    // );
+
+  function increaseQuantity(id, data, countt) {
+    const userId = localStorage.getItem("localId");
+    const requestData = { user: userId, product: id, quantity: data + countt };
+    // console.log("$$$$$$$$$$$$", requestData);
+    setCount(count + 1);
+    axios
+      .post(`${BASE_URL}/api/addTocart`, requestData, {
+        headers: authHeader(),
+      })
+      .then((response) =>
+        response.status == "200"
+          ? toast.warn(response.data.message) || getCartDetail()
+          : toast.warn("Something went wrong..")
+      );
+    setTimeout(() => {
+      const requestOrderData = {
+        userId: userId,
+        productId: id,
+        quantity: data + countt,
+      };
+      axios
+        .post(`${BASE_URL}/api/saveOrder`, requestOrderData, {
+          headers: authHeader(),
+        })
+        .then((response) =>
+          response.status == "200"
+            ? getCartDetail()
+            : toast.warn("Something went wrong..")
+        );
+    }, 2000);
   }
-  // console.log("count", count);
-  function decreaseQuantity(id) {
-    if (count <= 1) {
+
+  let countVar = 0;
+  function decreaseQuantity(id, data, counte) {
+    if (data <= 1) {
+      toast.warn("Something went wrong..");
     } else {
-      setCount(count - 1);
+      countVar = countVar + counte;
+      if (data < countVar) {
+        toast.warn("Something went wrong..");
+      } else {
+        const userId = localStorage.getItem("localId");
+        const requestData = {
+          user: userId,
+          product: id,
+          quantity: data - countVar,
+        };
+        axios
+          .post(`${BASE_URL}/api/addTocart`, requestData, {
+            headers: authHeader(),
+          })
+          .then((response) =>
+            response.status == "200"
+              ? getCartDetail()
+              : toast.warn("Something went wrong..")
+          );
+        setTimeout(() => {
+          const requestOrderData = {
+            userId: userId,
+            productId: id,
+            quantity: data - countVar,
+          };
+          axios
+            .post(`${BASE_URL}/api/saveOrder`, requestOrderData, {
+              headers: authHeader(),
+            })
+            .then((response) =>
+              response.status == "200"
+                ? getCartDetail()
+                : toast.warn("Something went wrong..")
+            );
+        });
+      }
     }
   }
-  // const scores = [10, 20];
-  // const totalScores = scores.reduce(
-  //   (previousScore, currentScore, index) => previousScore + currentScore,
-  //   0
-  // );
-  // console.log("@@@@@@@@@@@@@@@@@@totalScores", totalScores);
-  // console.log("tempPricetempPrice!!!!!!!!!!!!!!", tempPrice);
-  // console.log("%%%%%%%%%%%%%%%price", price);
 
   return (
     <>
@@ -171,14 +219,34 @@ const Cart = () => {
                             <div style={{ display: "inline-flex" }}>
                               <div className="borderCart2">
                                 &nbsp;
-                                <button
-                                  className="buttIcon"
-                                  onClick={() =>
-                                    decreaseQuantity(item.product._id)
-                                  }
-                                >
-                                  <RemoveIcon style={{ fontSize: "30px" }} />
-                                </button>
+                                {item.quantity == "1" ? (
+                                  <button
+                                    disabled
+                                    className="buttIcon"
+                                    onClick={() =>
+                                      decreaseQuantity(
+                                        item.product._id,
+                                        item.quantity,
+                                        count
+                                      )
+                                    }
+                                  >
+                                    <RemoveIcon style={{ fontSize: "30px" }} />
+                                  </button>
+                                ) : (
+                                  <button
+                                    className="buttIcon"
+                                    onClick={() =>
+                                      decreaseQuantity(
+                                        item.product._id,
+                                        item.quantity,
+                                        count
+                                      )
+                                    }
+                                  >
+                                    <RemoveIcon style={{ fontSize: "30px" }} />
+                                  </button>
+                                )}
                                 &emsp; &emsp;
                                 <span style={{ fontSize: "23px" }} className="">
                                   {item.quantity}
@@ -187,7 +255,11 @@ const Cart = () => {
                                 <button
                                   className="buttIcon"
                                   onClick={() =>
-                                    increaseQuantity(item.product._id)
+                                    increaseQuantity(
+                                      item.product._id,
+                                      item.quantity,
+                                      count
+                                    )
                                   }
                                 >
                                   <AddIcon style={{ fontSize: "30px" }} />

@@ -594,3 +594,6 @@ a.MuiButtonBase-root.MuiButton-root.MuiButton-text.menuButton1.login {
 .MuiPaper-elevation4 {
   box-shadow: none !important;
 }
+.btnn {
+  color: #b79e9e !important;
+}

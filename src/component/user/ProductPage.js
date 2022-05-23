@@ -49,6 +49,7 @@ const ProductPage = () => {
   const dispatch = useDispatch();
   const [product, setProduct] = useState([]);
   const [count, setCount] = useState(1);
+  const [count1, setCount1] = useState(1);
   const [idid, setIdd] = useState([]);
   const [cat, setCat] = useState([]);
   let name = [];
@@ -91,7 +92,7 @@ const ProductPage = () => {
 
     product.filter((idd) => (id == idd._id ? setIdd(idd._id) : ""));
     product.filter((idd) =>
-      id == idd._id ? setCount(count + 1) : console.log("AAAAAA")
+      id == idd._id ? setCount(count + 1) : console.log("BBBB")
     );
   }
   function decreaseQuantity(id) {
@@ -117,7 +118,22 @@ const ProductPage = () => {
             }, 1000)
           : toast.warn("Something went wrong..")
       );
-    // toast.success("LogOut Successfully");
+    setTimeout(() => {
+      const requestOrderData = {
+        userId: userId,
+        productId: id,
+        quantity: data,
+      };
+      axios
+        .post(`${BASE_URL}/api/saveOrder`, requestOrderData, {
+          headers: authHeader(),
+        })
+        .then((response) =>
+          response.status == "200"
+            ? getProduct()
+            : toast.warn("Something went wrong..")
+        );
+    });
   }
 
   return (
@@ -159,10 +175,6 @@ const ProductPage = () => {
                               </button>
                               &emsp;&nbsp; &emsp;&nbsp;
                               <span style={{ fontSize: "30px" }} className="">
-                                {/* {product.filter((idd) =>
-                                  item._id == idd._id ? count : "0"
-                                )} */}
-                                {/* {console.log("$$$$$$$$$$$$$$idid", idid)} */}
                                 {item._id == idid ? count : "1"}
                               </span>
                               &emsp;&nbsp;&emsp;&nbsp;

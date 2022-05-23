@@ -24,6 +24,7 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import { API } from "../../config/config";
 import axios from "axios";
+import Example from "../../common/Loader";
 import { getLocation } from "../../action/HomePageAction";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -58,6 +59,7 @@ const Checkout = (props) => {
   const [phone, setPhone] = useState();
   const [email, setEmail] = useState();
   const [address, setAddress] = useState();
+  const [loading, setLoading] = useState(true);
   const [locationData, setLocationData] = useState();
   const [cartData, setCartData] = useState([]);
   const [location, setLocation] = useState();
@@ -226,10 +228,9 @@ const Checkout = (props) => {
         })
         .then((response) =>
           response.status == "200"
-            ? (window.location = response.data.redirectUrl)
+            ? setLoading(false)((window.location = response.data.redirectUrl))
             : toast.warn("Something went wrong..")
         );
-      // console.log("Cardd");
     } else if (value1 == "cashOnDelivery") {
       console.log("Cash on deleviry", items);
     } else {
@@ -330,7 +331,7 @@ const Checkout = (props) => {
                                             Your Phone Number*
                                           </label>
                                           <input
-                                            type="number"
+                                            type="tel"
                                             id="phone"
                                             name="phone"
                                             className="form-control  feildcss"
@@ -542,6 +543,7 @@ const Checkout = (props) => {
                         </div>
                       </div>
                     </TabPanel>
+
                     <TabPanel value="3">
                       <div className="">
                         <Box sx={{ width: "100%" }}>
@@ -634,20 +636,24 @@ const Checkout = (props) => {
                                     </div>
                                     <br />
                                     <br />
-                                    <div style={{ textAlign: "center" }}>
-                                      {/* <a
+                                    {loading ? (
+                                      <div style={{ textAlign: "center" }}>
+                                        {/* <a
                                         className="checkoutLink"
                                         href="/checkout"
                                       > */}
-                                      <button
-                                        type="submit"
-                                        className="cartCheckout"
-                                        onClick={handlePayment}
-                                      >
-                                        Checkout
-                                      </button>
-                                      {/* </a> */}
-                                    </div>
+                                        <button
+                                          type="submit"
+                                          className="cartCheckout"
+                                          onClick={handlePayment}
+                                        >
+                                          Checkout
+                                        </button>
+                                        {/* </a> */}
+                                      </div>
+                                    ) : (
+                                      <Example />
+                                    )}
                                   </div>
                                 </Grid>
                               </Grid>

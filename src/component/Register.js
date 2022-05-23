@@ -176,7 +176,7 @@ class Register extends Component {
                                 Your Phone Number*
                               </label>
                               <input
-                                type="number"
+                                type="tel"
                                 id="phone"
                                 name="phone"
                                 style={{

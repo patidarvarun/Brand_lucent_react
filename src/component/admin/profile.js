@@ -135,7 +135,7 @@ class Profile extends Component {
             <div className="row mt-3 mb-3 rowdiv">
               <span className="heading ml-2 ">Your Profile Card</span>
             </div>
-            {console.log(this.state.userdatabyid, "ssss")}
+
             <div class="card cardcustom">
               <img
                 src={require("../../style/images/profile.jpg")}

@@ -72,7 +72,7 @@ const AllProduct = () => {
   }
   function cart(id, data) {
     // console.log("#############datacart", data);
-    console.log("ADD TO CART", count);
+    // console.log("ADD TO CART", count);
     const userId = localStorage.getItem("localId");
     const requestData = { user: userId, product: id, quantity: data };
     axios
@@ -87,7 +87,22 @@ const AllProduct = () => {
             }, 1000)
           : toast.warn("Something went wrong..")
       );
-    // toast.success("LogOut Successfully");
+    setTimeout(() => {
+      const requestOrderData = {
+        userId: userId,
+        productId: id,
+        quantity: data,
+      };
+      axios
+        .post(`${BASE_URL}/api/saveOrder`, requestOrderData, {
+          headers: authHeader(),
+        })
+        .then((response) =>
+          response.status == "200"
+            ? getProduct()
+            : toast.warn("Something went wrong..")
+        );
+    });
   }
 
   return (

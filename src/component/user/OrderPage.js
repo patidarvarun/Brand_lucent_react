@@ -17,11 +17,7 @@ import "../../style/js/select.dataTables.min.css";
 import "../../style/css/vertical-layout-light/style.css";
 import "../../style/images/favicon.png";
 import "../../style/css/sidebar.css";
-import AddIcon from "@mui/icons-material/Add";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import RemoveIcon from "@mui/icons-material/Remove";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { experimentalStyled as styled } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
 import Paper from "@mui/material/Paper";
 import "./user.css";
@@ -85,6 +81,7 @@ function authHeader() {
 const OrderPage = () => {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
+  const [order, setOrder] = React.useState([]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -93,6 +90,18 @@ const OrderPage = () => {
   const handleChangeIndex = (index) => {
     setValue(index);
   };
+  useEffect(() => {
+    getAllOrder();
+  }, []);
+  const getAllOrder = async () => {
+    const response = await axios
+      .get(`${API.getorder} `, {
+        headers: authHeader(),
+      })
+      .catch((err) => {});
+    setOrder(response.data);
+  };
+
   return (
     <>
       <body>
@@ -127,11 +136,71 @@ const OrderPage = () => {
                   onChangeIndex={handleChangeIndex}
                 >
                   <TabPanel value={value} index={0} dir={theme.direction}>
-                    <div className="imgorder">
+                    {order.length != "0" ? (
+                      <Fragment>
+                        <Grid
+                          container
+                          spacing={4}
+                          columns={10}
+                          className="bordercsscart"
+                        >
+                          {order.map((data) => (
+                            <Grid item xs={10} className="bordercsscart">
+                              {data.productId.map((item) => (
+                                <Fragment>
+                                  <div className="cartdiv">
+                                    <div style={{ display: "inline-flex" }}>
+                                      <div style={{ textAlign: "left" }}>
+                                        &emsp; &emsp;
+                                        <img
+                                          style={{
+                                            width: "6em",
+                                            height: "6em",
+                                            borderRadius: "5px",
+                                          }}
+                                          src={`${BASE_URL}/${item.image}`}
+                                          alt={item.name}
+                                        ></img>
+                                      </div>
+                                      {/* <div style={{ display: "inline-flex" }}> */}
+                                      <p className="pLeft">${item.price}</p>
+                                      <p className="pLeft">
+                                        Quantity {item.quantity}
+                                      </p>{" "}
+                                      &emsp; &emsp;
+                                      <br />
+                                      {/* </div> */}
+                                      <a
+                                        style={{ color: "rgb(104, 143, 78)" }}
+                                        // onClick={() =>
+                                        //   handleDelete(data._id, item.product._id)
+                                        // }
+                                      >
+                                        View Details
+                                      </a>
+                                    </div>
+                                  </div>
+                                  <br />
+                                </Fragment>
+                              ))}
+                            </Grid>
+                          ))}
+                        </Grid>
+                      </Fragment>
+                    ) : (
+                      <Fragment>
+                        <div className="imgorder">
+                          <img src="/noOpen.png"></img>
+                        </div>
+                        <br />
+                        <p className="orderPera">No open orders</p>
+                      </Fragment>
+                    )}
+                    {/* <div className="imgorder">
                       <img src="/noOpen.png"></img>
                     </div>
                     <br />
-                    <p className="orderPera">No open orders</p>
+                    <p className="orderPera">No open orders</p> */}
                   </TabPanel>
                   <TabPanel value={value} index={1} dir={theme.direction}>
                     <div className="imgorder">
@@ -142,84 +211,6 @@ const OrderPage = () => {
                   </TabPanel>
                 </SwipeableViews>
               </Box>
-              {/* <Grid
-                container
-                spacing={4}
-                columns={16}
-                className="bordercsscart"
-              >
-                {allData.map((data) => (
-                  <Grid item xs={10} className="bordercsscart">
-                    {data.cart.map((item) => (
-                      <Fragment>
-                        <div className="cartdiv">
-                          <div style={{ display: "none" }}>
-                            {
-                              ((tempPrice = item.quantity * item.product.price),
-                              (price = price + tempPrice))
-                            }
-                          </div>
-
-                          <div style={{ display: "inline-flex" }}>
-                            <div style={{ textAlign: "left" }}>
-                              &emsp; &emsp;
-                              <img
-                                style={{
-                                  width: "6em",
-                                  height: "6em",
-                                  borderRadius: "5px",
-                                }}
-                                src={`${BASE_URL}/${item.product.image}`}
-                                alt={item.product.name}
-                              ></img>
-                            </div>
-                            &emsp;
-                            <p className="pname">{item.product.name}</p>
-                            &emsp; &emsp; &emsp; &emsp;
-                            <div style={{ display: "inline-flex" }}>
-                              <div className="borderCart2">
-                                &nbsp;
-                                <button
-                                  className="buttIcon"
-                                  // onClick={() => decreaseQuantity(productDetails._id)}
-                                >
-                                  <RemoveIcon style={{ fontSize: "30px" }} />
-                                </button>
-                                &emsp; &emsp;
-                                <span style={{ fontSize: "23px" }} className="">
-                                  {item.quantity}
-                                </span>
-                                &emsp; &emsp;
-                                <button
-                                  className="buttIcon"
-                                  // onClick={() => increaseQuantity(productDetails._id)}
-                                >
-                                  <AddIcon style={{ fontSize: "30px" }} />
-                                </button>
-                                &nbsp;
-                              </div>
-                            </div>
-                            &emsp; &emsp; &emsp; &emsp;
-                            <div>
-                              <p className="pname">price</p>
-                              <p className="pname">${item.product.price}</p>
-                            </div>
-                            &emsp; &emsp; &emsp; &emsp;
-                            <a
-                              onClick={() =>
-                                handleDelete(data._id, item.product._id)
-                              }
-                            >
-                              <DeleteIcon />
-                            </a>
-                          </div>
-                        </div>
-                        <br />
-                      </Fragment>
-                    ))}
-                  </Grid>
-                ))} */}
-              {/* </Grid> */}
             </div>
           </div>
         </div>

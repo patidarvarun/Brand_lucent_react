@@ -111,7 +111,22 @@ const ProductDetails = () => {
           ? handleOpen()
           : toast.warn("Something went wrong..")
       );
-    // toast.success("LogOut Successfully");
+    setTimeout(() => {
+      const requestOrderData = {
+        userId: userId,
+        productId: id,
+        quantity: data,
+      };
+      axios
+        .post(`${BASE_URL}/api/saveOrder`, requestOrderData, {
+          headers: authHeader(),
+        })
+        .then((response) =>
+          response.status == "200"
+            ? getProductDetail()
+            : toast.warn("Something went wrong..")
+        );
+    });
   }
   return (
     <>

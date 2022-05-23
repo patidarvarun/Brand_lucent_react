@@ -127,12 +127,9 @@ class ProductDetail extends Component {
               </thead>
               <tbody>
                 {this.state.productData.map((item) => {
-                  console.log(item, "rrr");
                   return (
                     <>
                       <Modal
-                        // aria-labelledby="transition-modal-title"
-                        // aria-describedby="transition-modal-description"
                         open={this.state.open}
                         onClose={this.handleClose}
                         closeAfterTransition
