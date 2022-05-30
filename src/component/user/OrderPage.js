@@ -4,8 +4,9 @@ import AppBar from "./AppBar";
 import Footerr from "./Footerr";
 import axios from "axios";
 import Grid from "@mui/material/Grid";
+import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import "../../style/vendors/feather/feather.css";
 import "../../style/vendors/ti-icons/css/themify-icons.css";
@@ -28,7 +29,6 @@ import Checkout from "./Checkout";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";
-import AppBarr from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
@@ -81,16 +81,19 @@ const OrderPage = () => {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
   let [toggle, setToggle] = React.useState(true);
+  let defaultTabValue;
 
   const [order, setOrder] = React.useState([]);
   const [closeOrder, setCloseOrder] = React.useState([]);
+  let status;
+  let orderArray = [];
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    // toggle = !toggle;
-    // setToggle(toggle);
-    getAllOrder();
-    getCloseOrder();
+    defaultTabValue = newValue;
+    defaultTabValue === 0 ? (status = "open") : (status = "close");
+    getAllOrder(status);
+    // getCloseOrder();
   };
 
   const handleChangeIndex = (index) => {
@@ -98,31 +101,44 @@ const OrderPage = () => {
   };
 
   useEffect(() => {
-    getAllOrder();
-    getCloseOrder();
+    defaultTabValue = value;
+    defaultTabValue === 0 ? (status = "open") : (status = "close");
+    getAllOrder(status);
+    // getCloseOrder();
   }, []);
 
-  const getAllOrder = async () => {
+  const getAllOrder = async (status) => {
     const userIdd = localStorage.getItem("localId");
     const response = await axios
-      .get(`${API.getorder}${userIdd}?status=${"open"} `, {
+      .get(`${API.getorder}${userIdd}?status=${status} `, {
         headers: authHeader(),
       })
       .catch((err) => {});
 
+    orderArray = response.data;
     setOrder(response.data);
   };
-  const getCloseOrder = async () => {
-    const userIdd = localStorage.getItem("localId");
-    const response = await axios
-      .get(`${API.getorder}${userIdd}?status=${"close"} `, {
-        headers: authHeader(),
-      })
-      .catch((err) => {});
 
-    setCloseOrder(response.data);
-  };
+  function localFun(ord, pro) {
+    let clickableOrder = order[ord];
+    let clickableProduct = clickableOrder.products[pro];
 
+    // console.log("@@@@@@@@@@@@@@", clickableOrder);
+    // console.log("clickableProduct", clickableProduct);
+  }
+
+  // const getCloseOrder = async () => {
+  //   const userIdd = localStorage.getItem("localId");
+  //   const response = await axios
+  //     .get(`${API.getorder}${userIdd}?status=${"close"} `, {
+  //       headers: authHeader(),
+  //     })
+  //     .catch((err) => {});
+
+  //   setCloseOrder(response.data);
+  // };
+
+  // console.log("order", order);
   return (
     <>
       <body>
@@ -157,7 +173,7 @@ const OrderPage = () => {
                   onChangeIndex={handleChangeIndex}
                 >
                   <TabPanel value={value} index={0} dir={theme.direction}>
-                    {order.message == "There is no open  orders" ? (
+                    {order.message === "There is no open  orders" ? (
                       <Fragment>
                         <div className="imgorder">
                           <img src="/noOpen.png"></img>
@@ -173,9 +189,9 @@ const OrderPage = () => {
                           columns={10}
                           className="bordercsscart"
                         >
-                          {order.map((data) => (
+                          {order.map((data, orderIndex) => (
                             <Grid item xs={10} className="bordercsscart">
-                              {data.products.map((item) => (
+                              {data.products.map((item, productIndex) => (
                                 <Fragment>
                                   <div className="cartdiv">
                                     <div className="productBox">
@@ -204,10 +220,12 @@ const OrderPage = () => {
                                         <br />
                                       </div>
                                       <a
-                                        href="/viewOrder"
-                                        style={{ color: "rgb(104, 143, 78)" }}
+                                        href={`/viewOrder/${item._id}`}
+                                        style={{
+                                          color: "rgb(104, 143, 78)",
+                                        }}
                                         // onClick={() =>
-                                        //   handleDelete(data._id, item.product._id)
+                                        //   localFun(orderIndex, productIndex)
                                         // }
                                       >
                                         View Details
@@ -224,7 +242,7 @@ const OrderPage = () => {
                     )}
                   </TabPanel>
                   <TabPanel value={value} index={1} dir={theme.direction}>
-                    {closeOrder.message == "There is no close  orders" ? (
+                    {closeOrder.message === "There is no close  orders" ? (
                       <Fragment>
                         <div className="imgorder">
                           <img src="/noClosed.png"></img>
@@ -240,7 +258,7 @@ const OrderPage = () => {
                           columns={10}
                           className="bordercsscart"
                         >
-                          {closeOrder.map((data) => (
+                          {order.map((data) => (
                             <Grid item xs={10} className="bordercsscart">
                               {data.products.map((item) => (
                                 <Fragment>
@@ -271,14 +289,21 @@ const OrderPage = () => {
                                         <br />
                                       </div>
                                       <a
-                                        href="/viewOrder"
+                                        href={`/viewOrder/${item._id}`}
                                         style={{ color: "rgb(104, 143, 78)" }}
-                                        // onClick={() =>
-                                        //   handleDelete(data._id, item.product._id)
-                                        // }
                                       >
                                         View Details
                                       </a>
+                                      {/* <Link
+                                        to={{
+                                          pathname: "/viewOrder",
+                                          state: {
+                                            data: "your data",
+                                          },
+                                        }}
+                                      >
+                                        View
+                                      </Link> */}
                                     </div>
                                   </div>
                                   <br />

@@ -265,7 +265,7 @@ class Routers extends Component {
             <Route
               history={history}
               exact
-              path="/viewOrder"
+              path="/viewOrder/:id"
               element={<ViewOrderDetail />}
             />
             <Route

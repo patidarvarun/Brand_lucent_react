@@ -626,3 +626,33 @@ a.MuiButtonBase-root.MuiButton-root.MuiButton-text.menuButton1.login {
 .orderCss{
   font-size: x-large;;
 }
+.cartdiv1 {
+  padding: 10px;
+}
+.orderstatus{
+  font-size: large;
+color: rgb(104, 143, 78);
+}
+.orderCs3{
+  font-size: large;
+color:#4f4e4e;
+
+}
+.MuiCardContent-root.css-46bh2p-MuiCardContent-root {
+  padding-bottom: 0px !important;
+}
+.MuiCardContent-root.css-46bh2p-MuiCardContent-root {
+  padding: 7px !important;
+}
+.borderOrder{
+  padding: 10px;
+  border-bottom: 1px solid #B1D182;
+}
+.orderPera1{
+  font-size: large;
+  font-weight: 400;
+
+}
+.openOrdercs{
+  margin-top: 7em !important;
+}
