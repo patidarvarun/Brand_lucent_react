@@ -29,6 +29,7 @@
     "react-bootstrap": "^2.2.3",
     "react-dom": "^18.0.0",
     "react-helmet": "^6.1.0",
+    "react-loading": "^2.0.3",
     "react-minimal-side-navigation": "^1.9.2",
     "react-popper": "^2.2.5",
     "react-redux": "^7.2.8",
