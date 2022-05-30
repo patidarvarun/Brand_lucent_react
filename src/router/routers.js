@@ -40,6 +40,7 @@ import PaymentFailed from "../component/user/PaymentFailed";
 import OrderPage from "../component/user/OrderPage";
 import AddProductOffer from "../component/admin/AddProductOffer";
 import ProductOfferDetail from "../component/admin/ProductOfferDetail";
+import ViewOrderDetail from "../component/user/ViewOrderDetail";
 
 class Routers extends Component {
   state = {
@@ -198,6 +199,7 @@ class Routers extends Component {
               path="/footer"
               element={<Footerr />}
             />
+
             <Route
               history={history}
               exact
@@ -220,7 +222,7 @@ class Routers extends Component {
             <Route
               history={history}
               exact
-              path="/checkout"
+              path="/checkout/:orderid"
               element={<Checkout />}
             />
             <Route
@@ -258,6 +260,13 @@ class Routers extends Component {
               exact
               path="/offerDetail"
               element={<ProductOfferDetail />}
+            />
+
+            <Route
+              history={history}
+              exact
+              path="/viewOrder"
+              element={<ViewOrderDetail />}
             />
             <Route
               history={history}

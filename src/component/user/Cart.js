@@ -29,7 +29,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { getCart } from "../../action/HomePageAction";
 import { API, BASE_URL } from "../../config/config";
 import Checkout from "./Checkout";
-
+import { Close } from "@mui/icons-material";
 toast.configure();
 
 function authHeader() {
@@ -47,7 +47,6 @@ const Item = styled(Paper)(({ theme }) => ({
   textAlign: "center",
   color: theme.palette.text.secondary,
 }));
-
 const Cart = () => {
   const CartData = useSelector(
     (state) => state.cartData.cartdata.productOfCart
@@ -55,6 +54,11 @@ const Cart = () => {
   const [cartData, setCartData] = useState([]);
   const [allData, setAllData] = useState([]);
   const [count, setCount] = useState(1);
+  const [order, setOrder] = useState([]);
+  const [address, setAddressData] = useState([]);
+  // const [model, setModel] = useState(false);
+
+  // const navigate = useNavigate();
 
   const dispatch = useDispatch();
   let tempPrice = 0;
@@ -68,13 +72,24 @@ const Cart = () => {
       })
       .catch((err) => {});
     setCartData(response.data);
+    setOrder(response.data.productOfCart[0]);
     setAllData(response.data.productOfCart);
     dispatch(getCart(response.data));
   };
 
   useEffect(() => {
     getCartDetail();
+    getAddress();
   }, []);
+  const getAddress = async () => {
+    const id = localStorage.getItem("localId");
+    const response = await axios
+      .get(`${API.locationDetails}${id} `, {
+        headers: authHeader(),
+      })
+      .catch((err) => {});
+    setAddressData(response.data.accountInfo);
+  };
   const handleDelete = (data, id) => {
     axios
       .delete(`${API.deleteCartItem}`, {
@@ -102,25 +117,40 @@ const Cart = () => {
       })
       .then((response) =>
         response.status == "200"
-          ? toast.warn(response.data.message) || getCartDetail()
+          ? (window.location = "/cart")
           : toast.warn("Something went wrong..")
       );
-    setTimeout(() => {
-      const requestOrderData = {
-        userId: userId,
-        productId: id,
-        quantity: data + countt,
-      };
-      axios
-        .post(`${BASE_URL}/api/saveOrder`, requestOrderData, {
-          headers: authHeader(),
-        })
-        .then((response) =>
-          response.status == "200"
-            ? getCartDetail()
-            : toast.warn("Something went wrong..")
-        );
-    }, 2000);
+  }
+
+  function handleData() {
+    const userId = localStorage.getItem("localId");
+    let productData = [];
+    let products = order.cart.map((pro) =>
+      productData.push({
+        product: pro.product._id,
+        quantity: pro.quantity,
+      })
+    );
+
+    const requestOrderData = {
+      userId: userId,
+      cartid: order._id,
+      products: productData,
+      contact: "987654321",
+      amount: {
+        total: price,
+        currency: "USD",
+      },
+    };
+    axios
+      .post(`${BASE_URL}/api/saveOrder`, requestOrderData, {
+        headers: authHeader(),
+      })
+      .then((response) => {
+        if (response.status == 200) {
+          window.location = `/checkout/${response.data.orderdData._id}`;
+        }
+      });
   }
 
   let countVar = 0;
@@ -147,25 +177,10 @@ const Cart = () => {
               ? getCartDetail()
               : toast.warn("Something went wrong..")
           );
-        setTimeout(() => {
-          const requestOrderData = {
-            userId: userId,
-            productId: id,
-            quantity: data - countVar,
-          };
-          axios
-            .post(`${BASE_URL}/api/saveOrder`, requestOrderData, {
-              headers: authHeader(),
-            })
-            .then((response) =>
-              response.status == "200"
-                ? getCartDetail()
-                : toast.warn("Something went wrong..")
-            );
-        });
       }
     }
   }
+  // console.log(cartData, "cartDatall");
 
   return (
     <>
@@ -199,7 +214,6 @@ const Cart = () => {
                               (price = price + tempPrice))
                             }
                           </div>
-
                           <div style={{ display: "inline-flex" }}>
                             <div style={{ textAlign: "left" }}>
                               &emsp; &emsp;
@@ -214,7 +228,7 @@ const Cart = () => {
                               ></img>
                             </div>
                             &emsp;
-                            <p className="pname">{item.product.name}</p>
+                            <p className="pname"> {item.product.name} </p>
                             &emsp; &emsp; &emsp; &emsp;
                             <div style={{ display: "inline-flex" }}>
                               <div className="borderCart2">
@@ -269,8 +283,8 @@ const Cart = () => {
                             </div>
                             &emsp; &emsp; &emsp; &emsp;
                             <div>
-                              <p className="pname">price</p>
-                              <p className="pname">${item.product.price}</p>
+                              <p className="pname"> price </p>
+                              <p className="pname"> $ {item.product.price} </p>
                             </div>
                             &emsp; &emsp; &emsp; &emsp;
                             <a
@@ -300,7 +314,6 @@ const Cart = () => {
                       <br />
                       <p style={{ textAlign: "center" }}>Add item to it now.</p>
                       <br />
-
                       <div style={{ textAlign: "center" }}>
                         <a className="checkoutLink" href="/">
                           <button type="submit" className="cartCheckout">
@@ -313,32 +326,33 @@ const Cart = () => {
                 ) : (
                   <Grid item xs={5}>
                     <div className="cartSdiv">
-                      <h3 style={{ textAlign: "center" }}>Order Summary</h3>
+                      <h3 style={{ textAlign: "center" }}> Order Summary </h3>
                       <br />
                       <br />
                       <br />
                       <div style={{ display: "inline-flex" }}>
-                        <p className="pLeft">Sub Total</p> &emsp; &emsp;
-                        <p className="pRight">${price}</p>
+                        <p className="pLeft"> Sub Total </p> &emsp; &emsp;
+                        <p className="pRight"> $ {price} </p>
                       </div>
                       <div style={{ display: "inline-flex" }}>
-                        <p className="pLeft">Delivery Fee</p>
-                        <p className="pRight">$00</p>
+                        <p className="pLeft"> Delivery Fee </p>
+                        <p className="pRight"> $00 </p>
                       </div>
                       <hr style={{ color: "rgb(70 169 2)" }} />
                       <div style={{ display: "inline-flex" }}>
-                        <p className="pLeft">Total</p> &emsp; &emsp; &emsp;
-                        &emsp;&nbsp;
-                        <p className="pRight">${price}</p>
+                        <p className="pLeft"> Total </p> &emsp; &emsp; &emsp;
+                        &emsp; &nbsp; <p className="pRight"> $ {price} </p>
                       </div>
                       <br />
                       <br />
                       <div style={{ textAlign: "center" }}>
-                        <a className="checkoutLink" href="/checkout">
-                          <button type="submit" className="cartCheckout">
-                            Checkout
-                          </button>
-                        </a>
+                        <button
+                          onClick={() => handleData()}
+                          type="submit"
+                          className="cartCheckout"
+                        >
+                          Checkout
+                        </button>
                       </div>
                     </div>
                   </Grid>

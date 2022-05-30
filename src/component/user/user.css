@@ -597,3 +597,32 @@ a.MuiButtonBase-root.MuiButton-root.MuiButton-text.menuButton1.login {
 .btnn {
   color: #b79e9e !important;
 }
+.productDetail{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 63%;
+  margin-left: auto;
+
+}
+.css-1izfg5m {
+  background-color: transparent !important;
+  width: 100% !important;
+  max-width: 50%;
+}
+.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-4.bordercsscart.css-480o17-MuiGrid-root{
+  max-width: 100%;
+}
+.css-480o17-MuiGrid-root>.MuiGrid-item{
+  padding: 0px !important;
+}
+.productBox{
+  display: inline-flex;
+  width: 100%;
+}
+.orderCs{
+  font-size: large;
+}
+.orderCss{
+  font-size: x-large;;
+}

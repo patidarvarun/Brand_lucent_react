@@ -87,22 +87,6 @@ const AllProduct = () => {
             }, 1000)
           : toast.warn("Something went wrong..")
       );
-    setTimeout(() => {
-      const requestOrderData = {
-        userId: userId,
-        productId: id,
-        quantity: data,
-      };
-      axios
-        .post(`${BASE_URL}/api/saveOrder`, requestOrderData, {
-          headers: authHeader(),
-        })
-        .then((response) =>
-          response.status == "200"
-            ? getProduct()
-            : toast.warn("Something went wrong..")
-        );
-    });
   }
 
   return (

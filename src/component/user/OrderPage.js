@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useEffect, useState, Fragment } from "react";
 import AppBar from "./AppBar";
-
 import Footerr from "./Footerr";
 import axios from "axios";
 import Grid from "@mui/material/Grid";
@@ -81,25 +80,47 @@ function authHeader() {
 const OrderPage = () => {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
+  let [toggle, setToggle] = React.useState(true);
+
   const [order, setOrder] = React.useState([]);
+  const [closeOrder, setCloseOrder] = React.useState([]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    // toggle = !toggle;
+    // setToggle(toggle);
+    getAllOrder();
+    getCloseOrder();
   };
 
   const handleChangeIndex = (index) => {
     setValue(index);
   };
+
   useEffect(() => {
     getAllOrder();
+    getCloseOrder();
   }, []);
+
   const getAllOrder = async () => {
+    const userIdd = localStorage.getItem("localId");
     const response = await axios
-      .get(`${API.getorder} `, {
+      .get(`${API.getorder}${userIdd}?status=${"open"} `, {
         headers: authHeader(),
       })
       .catch((err) => {});
+
     setOrder(response.data);
+  };
+  const getCloseOrder = async () => {
+    const userIdd = localStorage.getItem("localId");
+    const response = await axios
+      .get(`${API.getorder}${userIdd}?status=${"close"} `, {
+        headers: authHeader(),
+      })
+      .catch((err) => {});
+
+    setCloseOrder(response.data);
   };
 
   return (
@@ -136,7 +157,15 @@ const OrderPage = () => {
                   onChangeIndex={handleChangeIndex}
                 >
                   <TabPanel value={value} index={0} dir={theme.direction}>
-                    {order.length != "0" ? (
+                    {order.message == "There is no open  orders" ? (
+                      <Fragment>
+                        <div className="imgorder">
+                          <img src="/noOpen.png"></img>
+                        </div>
+                        <br />
+                        <p className="orderPera">No open orders</p>
+                      </Fragment>
+                    ) : (
                       <Fragment>
                         <Grid
                           container
@@ -146,31 +175,36 @@ const OrderPage = () => {
                         >
                           {order.map((data) => (
                             <Grid item xs={10} className="bordercsscart">
-                              {data.productId.map((item) => (
+                              {data.products.map((item) => (
                                 <Fragment>
                                   <div className="cartdiv">
-                                    <div style={{ display: "inline-flex" }}>
+                                    <div className="productBox">
                                       <div style={{ textAlign: "left" }}>
                                         &emsp; &emsp;
                                         <img
                                           style={{
-                                            width: "6em",
-                                            height: "6em",
+                                            width: "6.3em",
+                                            height: "9em",
                                             borderRadius: "5px",
                                           }}
-                                          src={`${BASE_URL}/${item.image}`}
-                                          alt={item.name}
+                                          src={`${BASE_URL}/${item.product.image}`}
+                                          alt={item.product.name}
                                         ></img>
                                       </div>
-                                      {/* <div style={{ display: "inline-flex" }}> */}
-                                      <p className="pLeft">${item.price}</p>
-                                      <p className="pLeft">
-                                        Quantity {item.quantity}
-                                      </p>{" "}
-                                      &emsp; &emsp;
-                                      <br />
-                                      {/* </div> */}
+                                      <div className="productDetail">
+                                        <h2>{item.product.name}</h2>
+                                        <p className="orderCs">#{data._id}</p>
+                                        <p className="orderCss">
+                                          ${item.product.price}
+                                        </p>
+                                        <p className="orderCs">
+                                          Quantity &nbsp; {item.quantity}
+                                        </p>
+                                        &emsp; &emsp;
+                                        <br />
+                                      </div>
                                       <a
+                                        href="/viewOrder"
                                         style={{ color: "rgb(104, 143, 78)" }}
                                         // onClick={() =>
                                         //   handleDelete(data._id, item.product._id)
@@ -187,27 +221,74 @@ const OrderPage = () => {
                           ))}
                         </Grid>
                       </Fragment>
-                    ) : (
-                      <Fragment>
-                        <div className="imgorder">
-                          <img src="/noOpen.png"></img>
-                        </div>
-                        <br />
-                        <p className="orderPera">No open orders</p>
-                      </Fragment>
                     )}
-                    {/* <div className="imgorder">
-                      <img src="/noOpen.png"></img>
-                    </div>
-                    <br />
-                    <p className="orderPera">No open orders</p> */}
                   </TabPanel>
                   <TabPanel value={value} index={1} dir={theme.direction}>
-                    <div className="imgorder">
-                      <img src="/noClosed.png"></img>
-                    </div>
-                    <br />
-                    <p className="orderPera">No closed orders</p>
+                    {closeOrder.message == "There is no close  orders" ? (
+                      <Fragment>
+                        <div className="imgorder">
+                          <img src="/noClosed.png"></img>
+                        </div>
+                        <br />
+                        <p className="orderPera">No closed orders</p>
+                      </Fragment>
+                    ) : (
+                      <Fragment>
+                        <Grid
+                          container
+                          spacing={4}
+                          columns={10}
+                          className="bordercsscart"
+                        >
+                          {closeOrder.map((data) => (
+                            <Grid item xs={10} className="bordercsscart">
+                              {data.products.map((item) => (
+                                <Fragment>
+                                  <div className="cartdiv">
+                                    <div className="productBox">
+                                      <div style={{ textAlign: "left" }}>
+                                        &emsp; &emsp;
+                                        <img
+                                          style={{
+                                            width: "6.3em",
+                                            height: "9em",
+                                            borderRadius: "5px",
+                                          }}
+                                          src={`${BASE_URL}/${item.product.image}`}
+                                          alt={item.product.name}
+                                        ></img>
+                                      </div>
+                                      <div className="productDetail">
+                                        <h2>{item.product.name}</h2>
+                                        <p className="orderCs">#{item._id}</p>
+                                        <p className="orderCss">
+                                          ${item.product.price}
+                                        </p>
+                                        <p className="orderCs">
+                                          Quantity &nbsp; {item.quantity}
+                                        </p>
+                                        &emsp; &emsp;
+                                        <br />
+                                      </div>
+                                      <a
+                                        href="/viewOrder"
+                                        style={{ color: "rgb(104, 143, 78)" }}
+                                        // onClick={() =>
+                                        //   handleDelete(data._id, item.product._id)
+                                        // }
+                                      >
+                                        View Details
+                                      </a>
+                                    </div>
+                                  </div>
+                                  <br />
+                                </Fragment>
+                              ))}
+                            </Grid>
+                          ))}
+                        </Grid>
+                      </Fragment>
+                    )}
                   </TabPanel>
                 </SwipeableViews>
               </Box>

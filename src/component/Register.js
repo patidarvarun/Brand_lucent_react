@@ -34,7 +34,7 @@ class Register extends Component {
         rules: {
           name: {
             required: true,
-            rangelength: [2, 10],
+            // rangelength: [2, 10],
           },
           phone: { required: true, digits: true, minlength: 10, maxlength: 10 },
 
@@ -50,8 +50,8 @@ class Register extends Component {
         messages: {
           name: {
             required: "<p style='color:red'>Please enter your fullname</P>",
-            rangelength:
-              "<p style='color:red'>Your name must consist of at least 2 characters</p>",
+            // rangelength:
+            //   "<p style='color:red'>Your name must consist of at least 2 characters</p>",
           },
 
           phone: {

@@ -99,7 +99,7 @@ function Footerr() {
                 <div className="services4 services">
                   <img
                     className="footerImage1"
-                    src="/footerLogo.png"
+                    src="/footer.png"
                     style={{ width: "250px", height: "100px" }}
                   />
                 </div>

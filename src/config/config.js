@@ -55,5 +55,6 @@ export const API = {
   viewAddress: `${BASE_URL}/api/getAccountInfo?userid=`,
 
   paymentMethod: `${BASE_URL}/api/payment/paypalPayment`,
-  getorder: `${BASE_URL}/api/getAllOrders`,
+  getorder: `${BASE_URL}/api/getOrders/`,
+  orderidDetails: `${BASE_URL}/api/getUserOrder/`,
 };

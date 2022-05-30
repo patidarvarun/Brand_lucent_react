@@ -46,15 +46,3 @@ const mapStateToProps = (store) => {
   return {};
 };
 export default connect(mapStateToProps, {})(ProductDetail);
-
-// import React from 'react'
-
-// function OrderDetail() {
-//   const banner = useSelector((state) => state);
-
-//   return (
-//     <div>OrderDetail</div>
-//   )
-// }
-
-// export default OrderDetail

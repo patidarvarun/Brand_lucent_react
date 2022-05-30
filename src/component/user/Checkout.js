@@ -29,6 +29,8 @@ import { getLocation } from "../../action/HomePageAction";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./user.css";
+import PaymentSuccess from "./PaymentSuccess";
+import { useParams } from "react-router";
 toast.configure();
 
 function authHeader() {
@@ -62,9 +64,11 @@ const Checkout = (props) => {
   const [loading, setLoading] = useState(true);
   const [locationData, setLocationData] = useState();
   const [cartData, setCartData] = useState([]);
+  const [orderIdData, setOrderData] = useState([]);
   const [location, setLocation] = useState();
   const [oldAddress, setOldAddress] = useState();
 
+  const { orderid } = useParams();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -111,6 +115,15 @@ const Checkout = (props) => {
       .catch((err) => {});
     setLocationData(response.data.accountInfo);
     dispatch(getLocation(response.data.accountInfo));
+  };
+  // console.log("Idddd", orderid);
+  const getOrder = async () => {
+    const response = await axios
+      .get(`${API.orderidDetails}${orderid} `, {
+        headers: authHeader(),
+      })
+      .catch((err) => {});
+    setOrderData(response.data);
   };
 
   useEffect(() => {
@@ -160,6 +173,9 @@ const Checkout = (props) => {
       });
     });
     getCartDetail();
+    getOrder();
+    localStorage.setItem("orderid", orderid);
+
     // getOldAddress();
   }, []);
   function handleSubmit(e) {
@@ -222,6 +238,7 @@ const Checkout = (props) => {
           total: price,
         },
       };
+      localStorage.setItem("price", JSON.stringify(requestData.amount.total));
       axios
         .post(`${API.paymentMethod}`, requestData, {
           headers: authHeader(),
@@ -237,7 +254,8 @@ const Checkout = (props) => {
       console.log("Another Method");
     }
   }
-
+  // console.log("!!!!!!!!!!!!items", items);
+  // console.log("response", orderIdData);
   return (
     <>
       <body>
@@ -565,27 +583,29 @@ const Checkout = (props) => {
                             <div className="backgrondcolorr">
                               <Grid container spacing={4} columns={16}>
                                 <Grid item xs={10}>
-                                  {cartData.map((data) => (
-                                    <>
-                                      {data.cart.map((item) => (
-                                        <div style={{ display: "none" }}>
-                                          {
-                                            (((tempPrice =
-                                              item.quantity *
-                                              item.product.price),
-                                            (price = price + tempPrice)),
-                                            items.push({
-                                              name: item.product.name,
-                                              sku: "sku123",
-                                              price: item.product.price,
-                                              currency: "USD",
-                                              quantity: item.quantity,
-                                            }))
-                                          }
-                                        </div>
+                                  {orderIdData.length == "0"
+                                    ? console.log("emptyyyy")
+                                    : orderIdData.products.map((data) => (
+                                        <>
+                                          <div style={{ display: "none" }}>
+                                            {
+                                              (((tempPrice =
+                                                data.quantity *
+                                                data.product.price),
+                                              (price = price + tempPrice)),
+                                              items.push({
+                                                name: data.product.name,
+                                                description:
+                                                  data.product.description,
+                                                sku: "sku123",
+                                                price: data.product.price,
+                                                currency: "USD",
+                                                quantity: data.quantity,
+                                              }))
+                                            }
+                                          </div>
+                                        </>
                                       ))}
-                                    </>
-                                  ))}
 
                                   <div>
                                     <h4>Payment Method</h4>
