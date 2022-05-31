@@ -2,58 +2,18 @@ import * as React from "react";
 import Footerr from "./Footerr";
 import AppBar from "./AppBar";
 import { useEffect, Fragment } from "react";
+import { useLocation } from "react-router-dom";
 import Grid from "@mui/material/Grid";
-import axios from "axios";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { API, BASE_URL } from "../../config/config";
-import { useParams } from "react-router";
-import Card from "@mui/material/Card";
+import { BASE_URL } from "../../config/config";
 import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import "./user.css";
 import { Box } from "@mui/system";
+import "./user.css";
 
-function authHeader() {
-  const user = localStorage.getItem("data");
-  if (user) {
-    return { Authorization: `Bearer ${JSON.parse(user)}` };
-  } else {
-    return {};
-  }
-}
 const ViewOrderDetail = () => {
-  const [order, setOrder] = React.useState([]);
-  const [closeOrder, setCloseOrder] = React.useState([]);
-  let isView = true;
-  const { id } = useParams();
-
-  const getAllOrder = async () => {
-    const userIdd = localStorage.getItem("localId");
-    const response = await axios
-      .get(`${API.getorder}${userIdd}?status=${"open"} `, {
-        headers: authHeader(),
-      })
-      .catch((err) => {});
-
-    setOrder(response.data);
-  };
-  const getCloseOrder = async () => {
-    const userIdd = localStorage.getItem("localId");
-    const response = await axios
-      .get(`${API.getorder}${userIdd}?status=${"close"} `, {
-        headers: authHeader(),
-      })
-      .catch((err) => {});
-
-    setCloseOrder(response.data);
-  };
-  useEffect(() => {
-    getAllOrder();
-    getCloseOrder();
-  }, []);
-
-  //   console.log("@@@@@order", order);
-  //   console.log("$$$$$$$closeOrder", closeOrder);
+  const location = useLocation();
+  let product = location.state.product;
+  let order = location.state.order;
   return (
     <>
       <body>
@@ -70,150 +30,47 @@ const ViewOrderDetail = () => {
                 </h2>
               </a>
               <br />
-              {order.map((data) => (
-                <>
+
+              <div className="closeOrderClass">
+                <div className="anotherDiv">
                   <Box sx={{ maxWidth: 600 }}>
-                    {data.products.map((item) => (
-                      <CardContent>
-                        {id === item._id ? (
-                          <React.Fragment>
-                            <div className="cartdiv1">
-                              <div className="productBox">
-                                <div style={{ textAlign: "left" }}>
-                                  &emsp; &emsp;
-                                  <img
-                                    style={{
-                                      width: "7.9em",
-                                      height: "10em",
-                                      borderRadius: "5px",
-                                    }}
-                                    src={`${BASE_URL}/${item.product.image}`}
-                                    alt={item.product.name}
-                                  ></img>
-                                </div>
-                                <div className="productDetail">
-                                  <h3>{item.product.name}</h3>
-                                  <p className="orderCs3">#{data._id}</p>
-                                  <p className="orderCs3">
-                                    Quantity : {item.quantity}
-                                  </p>
-                                  <p className="orderCss">
-                                    ${item.product.price}
-                                  </p>
-                                  <p className="orderstatus">
-                                    status&nbsp;{data.status}
-                                  </p>
-                                </div>
-                              </div>
+                    <CardContent>
+                      <React.Fragment>
+                        <div className="cartdiv1 shadowcss">
+                          <div className="productBox">
+                            <div style={{ textAlign: "left" }}>
+                              &emsp; &emsp;
+                              <img
+                                style={{
+                                  width: "7.9em",
+                                  height: "10em",
+                                  borderRadius: "5px",
+                                }}
+                                src={`${BASE_URL}/${product.product.image}`}
+                                alt={product.product.name}
+                              ></img>
                             </div>
-                          </React.Fragment>
-                        ) : (
-                          <div style={{ display: "none" }}></div>
-                        )}
-                      </CardContent>
-                    ))}
+                            <div className="productDetail">
+                              <h3>{product.product.name}</h3>
+                              <p className="orderCs3">#{order._id}</p>
+                              <p className="orderCs3">
+                                Quantity : {product.quantity}
+                              </p>
+                              <p className="orderCss">
+                                ${product.product.price}
+                              </p>
+                              <p className="orderstatus">
+                                status&nbsp;{order.status}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </React.Fragment>
+                    </CardContent>
                   </Box>
                   <br />
-
-                  <Grid
-                    container
-                    spacing={3}
-                    columns={16}
-                    className="bordercsscart openOrdercs"
-                  >
-                    {data.products.map((item) => (
-                      <>
-                        {id === item._id ? (
-                          <Fragment>
-                            <Grid item xs={8} className="">
-                              <div>
-                                <h2 style={{ textAlign: "center" }}>
-                                  Payment Information
-                                </h2>
-                                <h4>Payment Method</h4>
-                                <div>
-                                  <div>
-                                    <p className="orderPera1">Mpesa</p>
-                                  </div>
-                                  <div>
-                                    <p className="orderPera1">Phone Number</p>
-                                  </div>
-                                </div>
-                                <div className="borderOrder"></div>
-                                <h4>Payment Information</h4>
-                                <div>
-                                  <div>
-                                    <p className="orderPera1">Order Total</p>
-                                  </div>
-                                  <div>
-                                    <p className="orderPera1">Delivery Fee </p>
-                                  </div>
-                                  <div>
-                                    <p className="orderPera1">Total Fee</p>
-                                  </div>
-                                </div>
-                              </div>
-                            </Grid>
-                            <Grid item xs={8}>
-                              <div>
-                                <h2 style={{ textAlign: "center" }}>
-                                  Delivery Information
-                                </h2>
-                                <h4>Delivery at your address</h4>
-                              </div>
-                            </Grid>
-                          </Fragment>
-                        ) : (
-                          <div style={{ display: "none" }}></div>
-                        )}
-                      </>
-                    ))}
-                  </Grid>
-                </>
-              ))}
-              {closeOrder.map((data) => (
-                <>
-                  <Box sx={{ maxWidth: 600 }}>
-                    {data.products.map((item) => (
-                      <CardContent>
-                        {id === item._id ? (
-                          <React.Fragment>
-                            <div className="cartdiv1">
-                              <div className="productBox">
-                                <div style={{ textAlign: "left" }}>
-                                  &emsp; &emsp;
-                                  <img
-                                    style={{
-                                      width: "7.9em",
-                                      height: "10em",
-                                      borderRadius: "5px",
-                                    }}
-                                    src={`${BASE_URL}/${item.product.image}`}
-                                    alt={item.product.name}
-                                  ></img>
-                                </div>
-                                <div className="productDetail">
-                                  <h3>{item.product.name}</h3>
-                                  <p className="orderCs3">#{data._id}</p>
-                                  <p className="orderCs3">
-                                    Quantity : {item.quantity}
-                                  </p>
-                                  <p className="orderCss">
-                                    ${item.product.price}
-                                  </p>
-                                  <p className="orderstatus">
-                                    status&nbsp;{data.status}
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-                          </React.Fragment>
-                        ) : (
-                          <div style={{ display: "none" }}></div>
-                        )}
-                      </CardContent>
-                    ))}
-                  </Box>
+                  <br />
+                  <br />
                   <br />
                   <Grid
                     container
@@ -221,80 +78,79 @@ const ViewOrderDetail = () => {
                     columns={16}
                     className="bordercsscart"
                   >
-                    {data.products.map((item) => (
-                      <Fragment>
-                        {id === item._id ? (
-                          <>
-                            <Grid item xs={8} className="">
+                    <Fragment>
+                      <>
+                        <Grid item xs={8} className="">
+                          <div className="shadowcss">
+                            <h2
+                              style={{ textAlign: "center", fontSize: "37px" }}
+                            >
+                              Payment Information
+                            </h2>
+                            <h4 className="paymentHeading">Payment Method</h4>
+                            <div className="paymentDetailclass">
                               <div>
-                                <h2 style={{ textAlign: "center" }}>
-                                  Payment Information
-                                </h2>
-                                <h4>Payment Method</h4>
-                                <div>
-                                  <div>
-                                    <p className="orderPera1">
-                                      Mpesa &emsp;
-                                      &emsp;&emsp;&emsp;&emsp;&emsp;{" "}
-                                      {data.paymentMethod}
-                                    </p>{" "}
-                                  </div>
-                                  <div>
-                                    <p className="orderPera1">
-                                      Phone Number &emsp; &emsp; +254
-                                      {data.contact}
-                                    </p>
-                                  </div>
-                                </div>
-                                <div className="borderOrder"></div>
-                                <h4 style={{ marginTop: "30px" }}>
-                                  Payment Information
-                                </h4>
-                                <div>
-                                  <div>
-                                    <p className="orderPera1">
-                                      Order Total &emsp; &emsp; &nbsp; &emsp;{" "}
-                                      {data.amount.details.subtotal}
-                                    </p>
-                                  </div>
-                                  <div>
-                                    <p className="orderPera1">
-                                      Delivery Fee &emsp; &emsp; &emsp;&nbsp;
-                                      {"00"}
-                                    </p>
-                                  </div>
-                                  <div>
-                                    <p className="orderPera1">
-                                      Total Fee &emsp; &emsp; &emsp; &emsp;
-                                      &nbsp;
-                                      {data.amount.total}
-                                    </p>
-                                  </div>
-                                </div>
+                                <p className="orderPera1">
+                                  Mpesa &emsp; &emsp;&emsp;&emsp;&emsp;&emsp;{" "}
+                                  {order.paymentMethod}
+                                </p>{" "}
                               </div>
-                            </Grid>
-                            <Grid item xs={8}>
                               <div>
-                                <h2 style={{ textAlign: "center" }}>
-                                  Delivery Information
-                                </h2>
-                                <h4>Delivery at your address</h4>
-                                <div>
-                                  <p className="orderPera1">
-                                    {data.shipping_address.line1}
-                                  </p>
-                                </div>
+                                <p className="orderPera1">
+                                  Phone Number &emsp; &emsp; +254
+                                  {order.contact}
+                                </p>
                               </div>
-                            </Grid>
-                          </>
-                        ) : (
-                          <div style={{ display: "none" }}></div>
-                        )}
-                      </Fragment>
-                    ))}
+                            </div>
+                            <div className="borderOrder"></div>
+                            <h4
+                              className="paymentHeading"
+                              style={{ marginTop: "30px" }}
+                            >
+                              Payment Information
+                            </h4>
+                            <div className="paymentDetailclass">
+                              <div>
+                                <p className="orderPera1">
+                                  Order Total &emsp; &emsp; &nbsp; &emsp;{" "}
+                                  {order.amount.details.subtotal}
+                                </p>
+                              </div>
+                              <div>
+                                <p className="orderPera1">
+                                  Delivery Fee &emsp; &emsp; &emsp;&nbsp;
+                                  {"00"}
+                                </p>
+                              </div>
+                              <div>
+                                <p className="orderPera1">
+                                  Total Fee &emsp; &emsp; &emsp; &emsp; &nbsp;
+                                  {order.amount.total}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </Grid>
+                        <Grid item xs={8}>
+                          <div className="shadowcss">
+                            <h2 style={{ textAlign: "center" }}>
+                              Delivery Information
+                            </h2>
+                            <h4 className="paymentHeading">
+                              Delivery at your address
+                            </h4>
+                            <div className="paymentDetailaddress">
+                              <p className="orderPera1">
+                                {order.shipping_address.line1}
+                              </p>
+                            </div>
+                          </div>
+                        </Grid>
+                      </>
+                    </Fragment>
                   </Grid>
-                </>
-              ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>

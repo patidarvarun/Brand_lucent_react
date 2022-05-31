@@ -656,3 +656,20 @@ color:#4f4e4e;
 .openOrdercs{
   margin-top: 7em !important;
 }
+.linkcsss{
+  color: rgb(104, 143, 78)
+}
+h4.paymentHeading {
+  margin: 25px 0px 35px 94px;
+}
+.paymentDetailclass {
+  margin: 0px 0px 35px 145px;
+}
+.paymentDetailaddress {
+  margin: 0px 0px 35px 202px;
+}
+.shadowcss{
+      box-shadow: 0 0 10px rgb(104, 143, 78,.4);
+      padding: 10px;
+      height: 100%;
+}

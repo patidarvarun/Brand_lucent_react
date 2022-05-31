@@ -56,7 +56,6 @@ const Cart = () => {
   const [count, setCount] = useState(1);
   const [order, setOrder] = useState([]);
   const [address, setAddressData] = useState([]);
-  // const [model, setModel] = useState(false);
 
   // const navigate = useNavigate();
 
@@ -301,7 +300,7 @@ const Cart = () => {
                     ))}
                   </Grid>
                 ))}
-                {/* {console.log("@@@@@@@@@@@@@@@@@", price)} */}
+
                 {price === 0 ? (
                   <Grid item xs={16}>
                     <div

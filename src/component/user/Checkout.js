@@ -7,6 +7,7 @@ import $ from "jquery";
 import validate from "jquery-validation";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import { getOrderdata } from "../../action/HomePageAction";
 import Modal from "@mui/material/Modal";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import Stepper from "@mui/material/Stepper";
@@ -174,6 +175,7 @@ const Checkout = (props) => {
     });
     getCartDetail();
     getOrder();
+    dispatch(getOrderdata(orderid));
     localStorage.setItem("orderid", orderid);
 
     // getOldAddress();
@@ -254,8 +256,6 @@ const Checkout = (props) => {
       console.log("Another Method");
     }
   }
-  // console.log("!!!!!!!!!!!!items", items);
-  // console.log("response", orderIdData);
   return (
     <>
       <body>

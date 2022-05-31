@@ -22,7 +22,7 @@ import { experimentalStyled as styled } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductDetails } from "../../action/HomePageAction";
 import Paper from "@mui/material/Paper";
-import { BASE_URL } from "../../config/config";
+import { API, BASE_URL } from "../../config/config";
 import "./user.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -67,6 +67,9 @@ const ProductDetails = () => {
   const [productDetails, setProductDetails] = useState([]);
   const [count, setCount] = React.useState(1);
   const [open, setOpen] = React.useState(false);
+  const [order, setOrder] = useState([]);
+  let price = 0;
+  let tempPrice = 0;
   const handleOpen = () => {
     setOpen(true);
   };
@@ -82,14 +85,15 @@ const ProductDetails = () => {
       .catch((err) => {});
     setProductDetails(response.data.product);
     dispatch(getProductDetails(response.data));
+    handleCount();
   };
 
   useEffect(() => {
     getProductDetail();
+    getCartDetail();
   }, []);
 
   function increaseQuantity(id) {
-    //  console.log("@@@@@@@@@@@@@@@@@Idd", id);
     setCount(count + 1);
   }
   function decreaseQuantity(id) {
@@ -97,6 +101,57 @@ const ProductDetails = () => {
     } else {
       setCount(count - 1);
     }
+  }
+
+  function handleCount() {
+    axios
+      .post(`${BASE_URL}/api/addvisit?productid=${id}`, {
+        headers: authHeader(),
+      })
+      .then((response) => {
+        if (response.status == 200) {
+        }
+      });
+  }
+
+  const getCartDetail = async () => {
+    const id = localStorage.getItem("localId");
+    const response = await axios
+      .get(`${API.viewCart}${id} `, {
+        headers: authHeader(),
+      })
+      .catch((err) => {});
+    setOrder(response.data.productOfCart[0]);
+  };
+
+  function handleData() {
+    const userId = localStorage.getItem("localId");
+    let productData = [];
+    productData.push({
+      product: productDetails._id,
+      quantity: count,
+    });
+
+    const requestOrderData = {
+      userId: userId,
+      cartid: order._id,
+      products: productData,
+      contact: "987654321",
+      amount: {
+        total: price,
+        currency: "USD",
+      },
+    };
+
+    axios
+      .post(`${BASE_URL}/api/saveOrder`, requestOrderData, {
+        headers: authHeader(),
+      })
+      .then((response) => {
+        if (response.status == 200) {
+          window.location = `/checkout/${response.data.orderdData._id}`;
+        }
+      });
   }
 
   function addToCart(id, data) {
@@ -123,6 +178,12 @@ const ProductDetails = () => {
               <div className="content-wrapper">
                 <Grid container spacing={2} columns={16}>
                   <Grid item xs={8}>
+                    <div style={{ display: "none" }}>
+                      {
+                        ((tempPrice = count * productDetails.price),
+                        (price = price + tempPrice))
+                      }
+                    </div>
                     <div style={{ textAlign: "right" }}>
                       <img
                         style={{
@@ -204,16 +265,13 @@ const ProductDetails = () => {
 
                         <h2>{productDetails.name}</h2>
                         <p className="cartPrice">${productDetails.price}</p>
-                        <a href="/checkout">
-                          {" "}
-                          <button
-                            type="submit"
-                            // onClick={() => addToCart(productDetails._id, count)}
-                            className="checkout"
-                          >
-                            Checkout
-                          </button>
-                        </a>
+                        <button
+                          onClick={() => handleData()}
+                          type="submit"
+                          className="checkout"
+                        >
+                          Checkout
+                        </button>
                         <br />
                         <br />
 

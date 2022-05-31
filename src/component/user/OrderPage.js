@@ -4,10 +4,8 @@ import AppBar from "./AppBar";
 import Footerr from "./Footerr";
 import axios from "axios";
 import Grid from "@mui/material/Grid";
-import { Link } from "react-router-dom";
-import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
-import DeleteIcon from "@mui/icons-material/Delete";
+import Box from "@mui/material/Box";
 import "../../style/vendors/feather/feather.css";
 import "../../style/vendors/ti-icons/css/themify-icons.css";
 import "../../style/vendors/css/vendor.bundle.base.css";
@@ -18,14 +16,10 @@ import "../../style/css/vertical-layout-light/style.css";
 import "../../style/images/favicon.png";
 import "../../style/css/sidebar.css";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { useDispatch, useSelector } from "react-redux";
-import Paper from "@mui/material/Paper";
 import "./user.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { getCart } from "../../action/HomePageAction";
 import { API, BASE_URL } from "../../config/config";
-import Checkout from "./Checkout";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";
@@ -77,16 +71,16 @@ function authHeader() {
   }
 }
 
-const OrderPage = () => {
+const OrderPage = (props) => {
+  const navigate = useNavigate();
+
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
-  let [toggle, setToggle] = React.useState(true);
   let defaultTabValue;
 
   const [order, setOrder] = React.useState([]);
   const [closeOrder, setCloseOrder] = React.useState([]);
   let status;
-  let orderArray = [];
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -104,6 +98,7 @@ const OrderPage = () => {
     defaultTabValue = value;
     defaultTabValue === 0 ? (status = "open") : (status = "close");
     getAllOrder(status);
+
     // getCloseOrder();
   }, []);
 
@@ -114,31 +109,19 @@ const OrderPage = () => {
         headers: authHeader(),
       })
       .catch((err) => {});
-
-    orderArray = response.data;
-    setOrder(response.data);
+    setOrder(response.data.result);
   };
 
   function localFun(ord, pro) {
     let clickableOrder = order[ord];
     let clickableProduct = clickableOrder.products[pro];
-
-    // console.log("@@@@@@@@@@@@@@", clickableOrder);
-    // console.log("clickableProduct", clickableProduct);
+    navigate("/viewOrder", {
+      state: {
+        product: clickableProduct,
+        order: clickableOrder,
+      },
+    });
   }
-
-  // const getCloseOrder = async () => {
-  //   const userIdd = localStorage.getItem("localId");
-  //   const response = await axios
-  //     .get(`${API.getorder}${userIdd}?status=${"close"} `, {
-  //       headers: authHeader(),
-  //     })
-  //     .catch((err) => {});
-
-  //   setCloseOrder(response.data);
-  // };
-
-  // console.log("order", order);
   return (
     <>
       <body>
@@ -173,7 +156,7 @@ const OrderPage = () => {
                   onChangeIndex={handleChangeIndex}
                 >
                   <TabPanel value={value} index={0} dir={theme.direction}>
-                    {order.message === "There is no open  orders" ? (
+                    {order.length == 0 ? (
                       <Fragment>
                         <div className="imgorder">
                           <img src="/noOpen.png"></img>
@@ -220,13 +203,11 @@ const OrderPage = () => {
                                         <br />
                                       </div>
                                       <a
-                                        href={`/viewOrder/${item._id}`}
-                                        style={{
-                                          color: "rgb(104, 143, 78)",
-                                        }}
-                                        // onClick={() =>
-                                        //   localFun(orderIndex, productIndex)
-                                        // }
+                                        href=""
+                                        className="linkcsss"
+                                        onClick={() =>
+                                          localFun(orderIndex, productIndex)
+                                        }
                                       >
                                         View Details
                                       </a>
@@ -242,7 +223,7 @@ const OrderPage = () => {
                     )}
                   </TabPanel>
                   <TabPanel value={value} index={1} dir={theme.direction}>
-                    {closeOrder.message === "There is no close  orders" ? (
+                    {order.length == 0 ? (
                       <Fragment>
                         <div className="imgorder">
                           <img src="/noClosed.png"></img>
@@ -258,9 +239,9 @@ const OrderPage = () => {
                           columns={10}
                           className="bordercsscart"
                         >
-                          {order.map((data) => (
+                          {order.map((data, orderIndex) => (
                             <Grid item xs={10} className="bordercsscart">
-                              {data.products.map((item) => (
+                              {data.products.map((item, productIndex) => (
                                 <Fragment>
                                   <div className="cartdiv">
                                     <div className="productBox">
@@ -288,22 +269,21 @@ const OrderPage = () => {
                                         &emsp; &emsp;
                                         <br />
                                       </div>
-                                      <a
+                                      {/* <a
                                         href={`/viewOrder/${item._id}`}
-                                        style={{ color: "rgb(104, 143, 78)" }}
+                                        className="linkcsss"
+                                      >
+                                        View Details
+                                      </a> */}
+                                      <a
+                                        href=""
+                                        className="linkcsss"
+                                        onClick={() =>
+                                          localFun(orderIndex, productIndex)
+                                        }
                                       >
                                         View Details
                                       </a>
-                                      {/* <Link
-                                        to={{
-                                          pathname: "/viewOrder",
-                                          state: {
-                                            data: "your data",
-                                          },
-                                        }}
-                                      >
-                                        View
-                                      </Link> */}
                                     </div>
                                   </div>
                                   <br />

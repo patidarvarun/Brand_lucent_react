@@ -70,3 +70,9 @@ export const getPayment = (payment) => {
     payload: payment,
   };
 };
+export const getOrderdata = (orderData) => {
+  return {
+    type: ActionTypes.GET_ORDERDATA,
+    payload: orderData,
+  };
+};

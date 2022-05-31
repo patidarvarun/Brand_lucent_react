@@ -10,6 +10,7 @@ import { PaymentReducer } from "./PaymentReducer";
 import { ProductDetailReducer } from "./ProductDetailReducer";
 import { ProductReducer } from "./ProductReducer";
 import { SellingReducer } from "./SellingReducer";
+import { OrderDataReducer } from "./OrderDataReducer";
 
 const reducers = combineReducers({
   allBanners: BannerReducer,
@@ -23,5 +24,6 @@ const reducers = combineReducers({
   cartData: CartReducer,
   getLocation: LocationReducer,
   paymentT: PaymentReducer,
+  orderDetail: OrderDataReducer,
 });
 export default reducers;
