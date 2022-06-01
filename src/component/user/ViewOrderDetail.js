@@ -60,7 +60,8 @@ const ViewOrderDetail = () => {
                                 ${product.product.price}
                               </p>
                               <p className="orderstatus">
-                                status&nbsp;{order.status}
+                                Status&nbsp;
+                                {order.status == "open" ? "Pending" : "Done"}
                               </p>
                             </div>
                           </div>
