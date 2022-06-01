@@ -206,6 +206,22 @@ export function getProduct(callback) {
   };
 }
 
+export function getOrders(callback) {
+  const request = axios.get(`${API.getAdminOrder}`, {
+    headers: authHeader(),
+  });
+  return (dispatch) => {
+    request
+      .then((res) => {
+        callback(res);
+      })
+      .catch(function (error) {
+        console.log("error: ", error.response);
+        callback(error);
+      });
+  };
+}
+
 export function getProductDetail(callback) {
   const request = axios.get(`${API.getProductoff}`, {
     headers: authHeader(),

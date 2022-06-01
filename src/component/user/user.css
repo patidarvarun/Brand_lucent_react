@@ -28,7 +28,7 @@
   position: absolute;
   width: 163px;
   height: 50px;
-  top: 5em;
+  top: 6.5em;
   left: 9em;
 }
 .row1 {
@@ -165,6 +165,7 @@
   display: flex;
   width: 100%;
   justify-content: space-around;
+  margin-bottom: 7px;
 }
 .footer-main {
   max-width: 1160px;
@@ -672,4 +673,17 @@ h4.paymentHeading {
       box-shadow: 0 0 10px rgb(104, 143, 78,.4);
       padding: 10px;
       height: 100%;
+}
+.makeStyles-header-11 {
+  padding-left: 118px;
+  padding-right: 79px;
+  background-color: #ffffff !important;
+}
+.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-12.bordercss.css-15j76c0 {
+  margin-top: 4em !important;
+}
+.jss1 {
+  padding-left: 118px;
+  padding-right: 79px;
+  background-color:#ffffff !important;
 }

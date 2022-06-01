@@ -38,13 +38,15 @@ function Home(props) {
     (state) => state.allFooter.FootData.footerData
   );
   const [newDataa, setNewsDataa] = useState([]);
+  const [sellingProduct, setSellingProduct] = useState([]);
+  const [popular, setPopular] = useState([]);
   const [offerDataa, setOfferDataa] = useState([]);
   const [footDataa, setFootDataa] = useState([]);
   const [id1, setIdd] = useState([]);
 
   const dispatch = useDispatch();
 
-  // console.log("$$$$$$$$$$$$$offerDataa", offerDataa);
+  // console.log("$$$$$$$$$$$$$offerDataa", sellProduct);
 
   const getAllBanner = async () => {
     const response = await axios
@@ -68,8 +70,17 @@ function Home(props) {
         headers: authHeader(),
       })
       .catch((err) => {});
-    // console.log("@@@@@@@@@@@@@@@", response.data);
+    setSellingProduct(response.data.bestSelling);
     dispatch(getSellingProduct(response.data));
+  };
+  const getPopularProducts = async () => {
+    const response = await axios
+      .get(`${BASE_URL}/api/getPopular`, {
+        headers: authHeader(),
+      })
+      .catch((err) => {});
+
+    setPopular(response.data.popularProduct);
   };
   const getNewsLetter = async () => {
     const response = await axios
@@ -106,6 +117,7 @@ function Home(props) {
     getNewsLetter();
     getAllFooter();
     getOfferDetail();
+    getPopularProducts();
   }, []);
 
   function greetUser(idd) {
@@ -170,8 +182,7 @@ function Home(props) {
                 </Grid>
                 <Grid item xs={12} className="bordercss">
                   <h1>Best Selling Products</h1>
-                  {catData.slice(0, 4).map((data) => (
-                    // console.log("****************",data)
+                  {sellingProduct.slice(0, 4).map((data) => (
                     <div className="row1">
                       <div
                         style={{ background: "#f6f6f6" }}
@@ -181,15 +192,15 @@ function Home(props) {
                           src={`${BASE_URL}/${data.image}`}
                           style={{ width: "315px", height: "213px" }}
                         ></img>
-                        <p className="catfooter">Icecream</p>
-                        <p className="sellfooter">$20</p>
+                        <p className="catfooter">{data.name}</p>
+                        <p className="sellfooter">${data.price}</p>
                       </div>
                     </div>
                   ))}
                 </Grid>
                 <Grid item xs={12} className="bordercss">
                   <h1>Popular Products</h1>
-                  {catData.slice(0, 4).map((data) => (
+                  {popular.slice(0, 4).map((data) => (
                     // console.log("****************",data)
                     <div className="row1">
                       <div
@@ -200,8 +211,8 @@ function Home(props) {
                           src={`${BASE_URL}/${data.image}`}
                           style={{ width: "315px", height: "213px" }}
                         ></img>
-                        <p className="catfooter">Icecream</p>
-                        <p className="sellfooter">$20</p>
+                        <p className="catfooter">{data.name}</p>
+                        <p className="sellfooter">${data.price}</p>
                       </div>
                     </div>
                   ))}
@@ -305,8 +316,7 @@ function Home(props) {
                 </Grid>
                 <Grid item xs={12} className="bordercss">
                   <h1>Best Selling Products</h1>
-                  {catData.slice(0, 4).map((data) => (
-                    // console.log("****************",data)
+                  {sellingProduct.slice(0, 4).map((data) => (
                     <div className="row1">
                       <div
                         style={{ background: "#f6f6f6" }}
@@ -317,8 +327,8 @@ function Home(props) {
                             src={`${BASE_URL}/${data.image}`}
                             style={{ width: "315px", height: "213px" }}
                           ></img>
-                          <p className="catfooter">Icecream</p>
-                          <p className="sellfooter">$20</p>
+                          <p className="catfooter">{data.name}</p>
+                          <p className="sellfooter">${data.price}</p>
                         </a>
                       </div>
                     </div>
@@ -326,7 +336,7 @@ function Home(props) {
                 </Grid>
                 <Grid item xs={12} className="bordercss">
                   <h1>Popular Products</h1>
-                  {catData.slice(0, 4).map((data) => (
+                  {popular.slice(0, 4).map((data) => (
                     // console.log("****************",data)
                     <div className="row1">
                       <div
@@ -337,8 +347,8 @@ function Home(props) {
                           src={`${BASE_URL}/${data.image}`}
                           style={{ width: "315px", height: "213px" }}
                         ></img>
-                        <p className="catfooter">Icecream</p>
-                        <p className="sellfooter">$20</p>
+                        <p className="catfooter">{data.name}</p>
+                        <p className="sellfooter">${data.price}</p>
                       </div>
                     </div>
                   ))}
