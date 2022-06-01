@@ -18,6 +18,8 @@ import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import AppBar from "./AppBar";
 import "./user.css";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 import Footerr from "./Footerr";
 import ProductPage from "./ProductPage";
 
@@ -45,8 +47,23 @@ function Home(props) {
   const [id1, setIdd] = useState([]);
 
   const dispatch = useDispatch();
-
-  // console.log("$$$$$$$$$$$$$offerDataa", sellProduct);
+  const responsive = {
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 4,
+      slidesToSlide: 3, // optional, default to 1.
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 2,
+      slidesToSlide: 2, // optional, default to 1.
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1,
+      slidesToSlide: 1, // optional, default to 1.
+    },
+  };
 
   const getAllBanner = async () => {
     const response = await axios
@@ -161,61 +178,118 @@ function Home(props) {
                     </div>
                   ))}
                 </Grid>
-                <Grid item xs={12} className="bordercss">
+                <Grid
+                  item
+                  xs={12}
+                  className="bordercss sliderClass sliderClass2"
+                >
                   <h1>Offers</h1>
-                  {offerDataa.slice(0, 4).map((data) => (
-                    <div className="row1">
-                      <div
-                        style={{ background: "#f6f6f6" }}
-                        className="column1"
-                      >
-                        <img
-                          src={`${BASE_URL}/${data.productId.image}`}
-                          style={{ width: "315px", height: "213px" }}
-                        ></img>
-                        <p className="catfooter">{data.productId.name}</p>
-                        <p className="sellfooter">${data.discountPrice}</p>
-                        <p className="sellfooter2">${data.productId.price}</p>
+                  <Carousel
+                    swipeable={false}
+                    draggable={false}
+                    responsive={responsive}
+                    infinite={true}
+                    autoPlay={false}
+                    keyBoardControl={true}
+                    customTransition="all .5"
+                    transitionDuration={500}
+                    containerClass="carousel-container"
+                    removeArrowOnDeviceType={["tablet", "mobile"]}
+                    dotListClass="custom-dot-list-style"
+                    itemClass="carousel-item-padding-40-px"
+                  >
+                    {offerDataa.map((data) => (
+                      <div className="row1">
+                        <div
+                          style={{ background: "#f6f6f6" }}
+                          className="column1"
+                        >
+                          <img
+                            src={`${BASE_URL}/${data.productId.image}`}
+                            style={{ width: "315px", height: "213px" }}
+                          ></img>
+                          <p className="catfooter">{data.productId.name}</p>
+                          <p className="sellfooter">${data.discountPrice}</p>
+                          <p className="sellfooter2">${data.productId.price}</p>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </Carousel>
                 </Grid>
-                <Grid item xs={12} className="bordercss">
+                <Grid
+                  item
+                  xs={12}
+                  className="bordercss sliderClass sliderClass2"
+                >
                   <h1>Best Selling Products</h1>
-                  {sellingProduct.slice(0, 4).map((data) => (
-                    <div className="row1">
-                      <div
-                        style={{ background: "#f6f6f6" }}
-                        className="column1"
-                      >
-                        <img
-                          src={`${BASE_URL}/${data.image}`}
-                          style={{ width: "315px", height: "213px" }}
-                        ></img>
-                        <p className="catfooter">{data.name}</p>
-                        <p className="sellfooter">${data.price}</p>
+                  <Carousel
+                    swipeable={false}
+                    draggable={false}
+                    responsive={responsive}
+                    infinite={true}
+                    autoPlay={false}
+                    keyBoardControl={true}
+                    customTransition="all .5"
+                    transitionDuration={500}
+                    containerClass="carousel-container"
+                    removeArrowOnDeviceType={["tablet", "mobile"]}
+                    dotListClass="custom-dot-list-style"
+                    itemClass="carousel-item-padding-40-px"
+                  >
+                    {sellingProduct.map((data) => (
+                      <div className="row1">
+                        <div
+                          style={{ background: "#f6f6f6" }}
+                          className="column1"
+                        >
+                          <img
+                            src={`${BASE_URL}/${data.image}`}
+                            style={{ width: "315px", height: "213px" }}
+                          ></img>
+                          <p className="catfooter">{data.name}</p>
+                          <p className="sellfooter">${data.price}</p>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </Carousel>
                 </Grid>
-                <Grid item xs={12} className="bordercss">
+                <Grid
+                  item
+                  xs={12}
+                  className="bordercss  sliderClass sliderClass2"
+                >
                   <h1>Popular Products</h1>
-                  {popular.slice(0, 4).map((data) => (
-                    // console.log("****************",data)
-                    <div className="row1">
-                      <div
-                        style={{ background: "#f6f6f6" }}
-                        className="column1"
-                      >
-                        <img
-                          src={`${BASE_URL}/${data.image}`}
-                          style={{ width: "315px", height: "213px" }}
-                        ></img>
-                        <p className="catfooter">{data.name}</p>
-                        <p className="sellfooter">${data.price}</p>
+                  <Carousel
+                    swipeable={false}
+                    draggable={false}
+                    responsive={responsive}
+                    infinite={true}
+                    autoPlay={false}
+                    keyBoardControl={true}
+                    customTransition="all .5"
+                    transitionDuration={500}
+                    containerClass="carousel-container"
+                    removeArrowOnDeviceType={["tablet", "mobile"]}
+                    dotListClass="custom-dot-list-style"
+                    itemClass="carousel-item-padding-40-px"
+                  >
+                    {popular.slice(0, 4).map((data) => (
+                      // console.log("****************",data)
+                      <div className="row1">
+                        <div
+                          style={{ background: "#f6f6f6" }}
+                          className="column1"
+                        >
+                          <img
+                            src={`${BASE_URL}/${data.image}`}
+                            style={{ width: "315px", height: "213px" }}
+                          ></img>
+                          <p className="catfooter">{data.name}</p>
+                          <p className="sellfooter">${data.price}</p>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </Carousel>
                 </Grid>
               </Grid>
             </Box>
@@ -293,65 +367,124 @@ function Home(props) {
                   ))}
                 </Grid>
 
-                <Grid item xs={12} className="bordercss">
+                <Grid
+                  item
+                  xs={12}
+                  className="bordercss sliderClass sliderClass2"
+                >
                   <h1>Offers</h1>
-                  {offerDataa.slice(0, 4).map((data) => (
-                    <div className="row1">
-                      <div
-                        style={{ background: "#f6f6f6" }}
-                        className="column1"
-                      >
-                        <a className="withoutLogin" href="/login">
-                          <img
-                            src={`${BASE_URL}/${data.productId.image}`}
-                            style={{ width: "315px", height: "213px" }}
-                          ></img>
-                          <p className="catfooter">{data.productId.name}</p>
-                          <p className="sellfooter">${data.discountPrice}</p>
-                          <p className="sellfooter2">${data.productId.price}</p>
-                        </a>
+                  <Carousel
+                    swipeable={false}
+                    draggable={false}
+                    responsive={responsive}
+                    infinite={true}
+                    autoPlay={false}
+                    keyBoardControl={true}
+                    customTransition="all .5"
+                    transitionDuration={500}
+                    containerClass="carousel-container"
+                    removeArrowOnDeviceType={["tablet", "mobile"]}
+                    dotListClass="custom-dot-list-style"
+                    itemClass="carousel-item-padding-40-px"
+                  >
+                    {offerDataa.slice(0, 4).map((data) => (
+                      <div className="row1">
+                        <div
+                          style={{ background: "#f6f6f6" }}
+                          className="column1"
+                        >
+                          <a className="withoutLogin" href="/login">
+                            <img
+                              src={`${BASE_URL}/${data.productId.image}`}
+                              style={{ width: "315px", height: "213px" }}
+                            ></img>
+                            <p className="catfooter">{data.productId.name}</p>
+                            <p className="sellfooter">${data.discountPrice}</p>
+                            <p className="sellfooter2">
+                              ${data.productId.price}
+                            </p>
+                          </a>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </Carousel>
                 </Grid>
-                <Grid item xs={12} className="bordercss">
+                <Grid
+                  item
+                  xs={12}
+                  className="bordercss sliderClass sliderClass2"
+                >
                   <h1>Best Selling Products</h1>
-                  {sellingProduct.slice(0, 4).map((data) => (
-                    <div className="row1">
-                      <div
-                        style={{ background: "#f6f6f6" }}
-                        className="column1"
-                      >
-                        <a className="withoutLogin" href="/login">
+                  <Carousel
+                    swipeable={false}
+                    draggable={false}
+                    responsive={responsive}
+                    infinite={true}
+                    autoPlay={false}
+                    keyBoardControl={true}
+                    customTransition="all .5"
+                    transitionDuration={500}
+                    containerClass="carousel-container"
+                    removeArrowOnDeviceType={["tablet", "mobile"]}
+                    dotListClass="custom-dot-list-style"
+                    itemClass="carousel-item-padding-40-px"
+                  >
+                    {sellingProduct.map((data) => (
+                      <div className="row1">
+                        <div
+                          style={{ background: "#f6f6f6" }}
+                          className="column1"
+                        >
+                          <a className="withoutLogin" href="/login">
+                            <img
+                              src={`${BASE_URL}/${data.image}`}
+                              style={{ width: "315px", height: "213px" }}
+                            ></img>
+                            <p className="catfooter">{data.name}</p>
+                            <p className="sellfooter">${data.price}</p>
+                          </a>
+                        </div>
+                      </div>
+                    ))}
+                  </Carousel>
+                </Grid>
+                <Grid
+                  item
+                  xs={12}
+                  className="bordercss sliderClass sliderClass2"
+                >
+                  <h1>Popular Products</h1>
+                  <Carousel
+                    swipeable={false}
+                    draggable={false}
+                    responsive={responsive}
+                    infinite={true}
+                    autoPlay={false}
+                    keyBoardControl={true}
+                    customTransition="all .5"
+                    transitionDuration={500}
+                    containerClass="carousel-container"
+                    removeArrowOnDeviceType={["tablet", "mobile"]}
+                    dotListClass="custom-dot-list-style"
+                    itemClass="carousel-item-padding-40-px"
+                  >
+                    {popular.map((data) => (
+                      // console.log("****************",data)
+                      <div className="row1">
+                        <div
+                          style={{ background: "#f6f6f6" }}
+                          className="column1"
+                        >
                           <img
                             src={`${BASE_URL}/${data.image}`}
                             style={{ width: "315px", height: "213px" }}
                           ></img>
                           <p className="catfooter">{data.name}</p>
                           <p className="sellfooter">${data.price}</p>
-                        </a>
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </Grid>
-                <Grid item xs={12} className="bordercss">
-                  <h1>Popular Products</h1>
-                  {popular.slice(0, 4).map((data) => (
-                    // console.log("****************",data)
-                    <div className="row1">
-                      <div
-                        style={{ background: "#f6f6f6" }}
-                        className="column1"
-                      >
-                        <img
-                          src={`${BASE_URL}/${data.image}`}
-                          style={{ width: "315px", height: "213px" }}
-                        ></img>
-                        <p className="catfooter">{data.name}</p>
-                        <p className="sellfooter">${data.price}</p>
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </Carousel>
                 </Grid>
                 <Grid item xs={12}>
                   {newDataa.map((data) => (

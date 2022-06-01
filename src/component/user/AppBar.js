@@ -155,7 +155,7 @@ export default function HomeHeader() {
     return headersData.map(({ label, href }) => {
       if (label == "Login") {
         return (
-          <div className="varun">
+          <div className="">
             <Link
               {...{
                 component: RouterLink,

@@ -41,6 +41,7 @@ import OrderPage from "../component/user/OrderPage";
 import AddProductOffer from "../component/admin/AddProductOffer";
 import ProductOfferDetail from "../component/admin/ProductOfferDetail";
 import ViewOrderDetail from "../component/user/ViewOrderDetail";
+import ContactUS from "../component/user/ContactUs";
 
 class Routers extends Component {
   state = {
@@ -69,7 +70,12 @@ class Routers extends Component {
               path="/logout"
               element={<Logout />}
             />
-
+            <Route
+              history={history}
+              exact
+              path="/contactUs"
+              element={<ContactUS />}
+            />
             <Route
               history={history}
               exact
