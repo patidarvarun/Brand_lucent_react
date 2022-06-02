@@ -14,6 +14,7 @@ const ViewOrderDetail = () => {
   const location = useLocation();
   let product = location.state.product;
   let order = location.state.order;
+  console.log("porderroduct", order.paymentMethod);
   return (
     <>
       <body>
@@ -90,18 +91,33 @@ const ViewOrderDetail = () => {
                             </h2>
                             <h4 className="paymentHeading">Payment Method</h4>
                             <div className="paymentDetailclass">
-                              <div>
-                                <p className="orderPera1">
-                                  Mpesa &emsp; &emsp;&emsp;&emsp;&emsp;&emsp;{" "}
-                                  {order.paymentMethod}
-                                </p>{" "}
-                              </div>
-                              <div>
-                                <p className="orderPera1">
-                                  Phone Number &emsp; &emsp; +254
-                                  {order.contact}
-                                </p>
-                              </div>
+                              {order.paymentMethod != "" ? (
+                                <Fragment>
+                                  <div>
+                                    <p className="orderPera1">
+                                      Mpesa &emsp;&emsp;&emsp;&emsp; &emsp;
+                                      &emsp;
+                                      {order.paymentMethod}
+                                    </p>
+                                  </div>
+                                  <div>
+                                    <p className="orderPera1">
+                                      Phone Number &emsp; &emsp; +254
+                                      {order.contact}
+                                    </p>
+                                  </div>
+                                </Fragment>
+                              ) : (
+                                <Fragment>
+                                  <div>
+                                    <p className="orderPera1">
+                                      Phone Number &emsp; &emsp; +254
+                                      {order.contact}
+                                    </p>
+                                  </div>
+                                  <h5 className="cashon">Cash On Delivery</h5>
+                                </Fragment>
+                              )}
                             </div>
                             <div className="borderOrder"></div>
                             <h4
@@ -114,19 +130,21 @@ const ViewOrderDetail = () => {
                               <div>
                                 <p className="orderPera1">
                                   Order Total &emsp; &emsp; &nbsp; &emsp;{" "}
-                                  {order.amount.details.subtotal}
+                                  {product.quantity * product.product.price}
+                                  {".00"}
                                 </p>
                               </div>
                               <div>
                                 <p className="orderPera1">
                                   Delivery Fee &emsp; &emsp; &emsp;&nbsp;
-                                  {"00"}
+                                  {"00.00"}
                                 </p>
                               </div>
                               <div>
                                 <p className="orderPera1">
                                   Total Fee &emsp; &emsp; &emsp; &emsp; &nbsp;
-                                  {order.amount.total}
+                                  {product.quantity * product.product.price}
+                                  {".00"}
                                 </p>
                               </div>
                             </div>

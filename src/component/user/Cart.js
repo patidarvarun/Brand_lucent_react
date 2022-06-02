@@ -4,8 +4,7 @@ import AppBar from "./AppBar";
 import Footerr from "./Footerr";
 import axios from "axios";
 import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import "../../style/vendors/feather/feather.css";
 import "../../style/vendors/ti-icons/css/themify-icons.css";
@@ -17,7 +16,6 @@ import "../../style/css/vertical-layout-light/style.css";
 import "../../style/images/favicon.png";
 import "../../style/css/sidebar.css";
 import AddIcon from "@mui/icons-material/Add";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import RemoveIcon from "@mui/icons-material/Remove";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { experimentalStyled as styled } from "@mui/material/styles";
@@ -28,8 +26,6 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getCart } from "../../action/HomePageAction";
 import { API, BASE_URL } from "../../config/config";
-import Checkout from "./Checkout";
-import { Close } from "@mui/icons-material";
 toast.configure();
 
 function authHeader() {
@@ -48,6 +44,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 const Cart = () => {
+  const navigate = useNavigate();
   const CartData = useSelector(
     (state) => state.cartData.cartdata.productOfCart
   );
@@ -56,8 +53,6 @@ const Cart = () => {
   const [count, setCount] = useState(1);
   const [order, setOrder] = useState([]);
   const [address, setAddressData] = useState([]);
-
-  // const navigate = useNavigate();
 
   const dispatch = useDispatch();
   let tempPrice = 0;
@@ -108,7 +103,6 @@ const Cart = () => {
   function increaseQuantity(id, data, countt) {
     const userId = localStorage.getItem("localId");
     const requestData = { user: userId, product: id, quantity: data + countt };
-    // console.log("$$$$$$$$$$$$", requestData);
     setCount(count + 1);
     axios
       .post(`${BASE_URL}/api/addTocart`, requestData, {
@@ -122,34 +116,11 @@ const Cart = () => {
   }
 
   function handleData() {
-    const userId = localStorage.getItem("localId");
-    let productData = [];
-    let products = order.cart.map((pro) =>
-      productData.push({
-        product: pro.product._id,
-        quantity: pro.quantity,
-      })
-    );
-
-    const requestOrderData = {
-      userId: userId,
-      cartid: order._id,
-      products: productData,
-      contact: "987654321",
-      amount: {
+    navigate("/checkout", {
+      state: {
         total: price,
-        currency: "USD",
       },
-    };
-    axios
-      .post(`${BASE_URL}/api/saveOrder`, requestOrderData, {
-        headers: authHeader(),
-      })
-      .then((response) => {
-        if (response.status == 200) {
-          window.location = `/checkout/${response.data.orderdData._id}`;
-        }
-      });
+    });
   }
 
   let countVar = 0;
@@ -179,7 +150,6 @@ const Cart = () => {
       }
     }
   }
-  // console.log(cartData, "cartDatall");
 
   return (
     <>

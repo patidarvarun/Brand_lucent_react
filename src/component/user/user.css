@@ -761,3 +761,12 @@ h4.paymentHeading {
   position: relative;
 }
 /* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
+.cashon{
+  border: 1px solid rgb(104, 143, 78) !important;
+  width: 15.8em !important;
+  padding: 6px !important;
+  text-align: center !important;
+  color: rgb(104, 143, 78) !important;
+  margin-top: 25px;
+  box-shadow: 0 0 10px rgb(104, 143, 78) !important;
+}

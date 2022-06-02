@@ -3,6 +3,7 @@ import UserSideBar from "./UserSideBar";
 import { useEffect, useState } from "react";
 import AppBar from "./AppBar";
 import Footerr from "./Footerr";
+import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router";
 import axios from "axios";
 import Grid from "@mui/material/Grid";
@@ -58,11 +59,11 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const ProductDetails = () => {
+  const navigate = useNavigate();
   const ProductDetail = useSelector(
     (state) => state.allProductDetail.ProductDetails.product
   );
   const dispatch = useDispatch();
-
   const { id } = useParams();
   const [productDetails, setProductDetails] = useState([]);
   const [count, setCount] = React.useState(1);
@@ -131,7 +132,6 @@ const ProductDetails = () => {
       product: productDetails._id,
       quantity: count,
     });
-
     const requestOrderData = {
       userId: userId,
       cartid: order._id,
@@ -142,16 +142,20 @@ const ProductDetails = () => {
         currency: "USD",
       },
     };
-
-    axios
-      .post(`${BASE_URL}/api/saveOrder`, requestOrderData, {
-        headers: authHeader(),
-      })
-      .then((response) => {
-        if (response.status == 200) {
-          window.location = `/checkout/${response.data.orderdData._id}`;
-        }
-      });
+    navigate("/checkout", {
+      state: {
+        product: requestOrderData,
+      },
+    });
+    // axios
+    //   .post(`${BASE_URL}/api/saveOrder`, requestOrderData, {
+    //     headers: authHeader(),
+    //   })
+    //   .then((response) => {
+    //     if (response.status == 200) {
+    //       window.location = `/checkout/${response.data.orderdData._id}`;
+    //     }
+    //   });
   }
 
   function addToCart(id, data) {

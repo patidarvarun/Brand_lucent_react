@@ -228,7 +228,7 @@ class Routers extends Component {
             <Route
               history={history}
               exact
-              path="/checkout/:orderid"
+              path="/checkout"
               element={<Checkout />}
             />
             <Route

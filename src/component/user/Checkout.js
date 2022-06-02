@@ -7,7 +7,7 @@ import $ from "jquery";
 import validate from "jquery-validation";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import { getOrderdata } from "../../action/HomePageAction";
+import { useLocation } from "react-router-dom";
 import Modal from "@mui/material/Modal";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import Stepper from "@mui/material/Stepper";
@@ -18,20 +18,15 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
-import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
-import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import { API } from "../../config/config";
+import { API, BASE_URL } from "../../config/config";
 import axios from "axios";
 import Example from "../../common/Loader";
 import { getLocation } from "../../action/HomePageAction";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./user.css";
-import PaymentSuccess from "./PaymentSuccess";
-import { useParams } from "react-router";
 toast.configure();
 
 function authHeader() {
@@ -57,6 +52,7 @@ const style = {
 const steps = ["Account Info", "Delivery Information", "Payment"];
 
 const Checkout = (props) => {
+  let priceData = useLocation();
   const [value, setValue] = React.useState("1");
   const [name, setName] = useState();
   const [phone, setPhone] = useState();
@@ -69,14 +65,10 @@ const Checkout = (props) => {
   const [location, setLocation] = useState();
   const [oldAddress, setOldAddress] = useState();
 
-  const { orderid } = useParams();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [value1, setValue1] = React.useState("card");
-  let tempPrice = 0;
-  let price = 0;
-  let items = [];
 
   const handleChange1 = (event) => {
     setValue1(event.target.value);
@@ -116,15 +108,6 @@ const Checkout = (props) => {
       .catch((err) => {});
     setLocationData(response.data.accountInfo);
     dispatch(getLocation(response.data.accountInfo));
-  };
-  // console.log("Idddd", orderid);
-  const getOrder = async () => {
-    const response = await axios
-      .get(`${API.orderidDetails}${orderid} `, {
-        headers: authHeader(),
-      })
-      .catch((err) => {});
-    setOrderData(response.data);
   };
 
   useEffect(() => {
@@ -174,12 +157,9 @@ const Checkout = (props) => {
       });
     });
     getCartDetail();
-    getOrder();
-    dispatch(getOrderdata(orderid));
-    localStorage.setItem("orderid", orderid);
-
     // getOldAddress();
   }, []);
+
   function handleSubmit(e) {
     e.preventDefault();
     const id = localStorage.getItem("localId");
@@ -230,30 +210,112 @@ const Checkout = (props) => {
       })
       .then((response) => (response.status == "200" ? handleTab3() : ""));
   }
+  let totalPrice = 0;
   function handlePayment() {
     if (value1 == "card") {
-      const requestData = {
-        userid: localStorage.getItem("localId"),
-        items: items,
+      const userId = localStorage.getItem("localId");
+      let items = [];
+      let productData = [];
+      let products = cartData[0].cart.map(
+        (pro) => (
+          productData.push({
+            product: pro.product._id,
+            quantity: pro.quantity,
+          }),
+          (totalPrice = pro.quantity * pro.product.price + totalPrice),
+          items.push({
+            name: pro.product.name,
+            description: pro.product.description,
+            sku: "sku123",
+            price: pro.product.price,
+            currency: "USD",
+            quantity: pro.quantity,
+          })
+        )
+      );
+      const requestOrderData = {
+        userId: userId,
+        cartid: cartData[0]._id,
+        products: productData,
+        contact: locationData[0].phone,
         amount: {
+          total: totalPrice,
           currency: "USD",
-          total: price,
         },
       };
-      localStorage.setItem("price", JSON.stringify(requestData.amount.total));
       axios
-        .post(`${API.paymentMethod}`, requestData, {
+        .post(`${BASE_URL}/api/saveOrder`, requestOrderData, {
           headers: authHeader(),
         })
-        .then((response) =>
-          response.status == "200"
-            ? setLoading(false)((window.location = response.data.redirectUrl))
-            : toast.warn("Something went wrong..")
-        );
+        .then((response) => {
+          if (response.status == 200) {
+            const requestData = {
+              userid: localStorage.getItem("localId"),
+              items: items,
+              amount: {
+                currency: "USD",
+                total: totalPrice,
+              },
+            };
+            localStorage.setItem("orderid", response.data.orderdData._id);
+            localStorage.setItem(
+              "price",
+              JSON.stringify(requestData.amount.total)
+            );
+            axios
+              .post(`${API.paymentMethod}`, requestData, {
+                headers: authHeader(),
+              })
+              .then((response) =>
+                response.status == "200"
+                  ? setLoading(false)(
+                      (window.location = response.data.redirectUrl)
+                    )
+                  : toast.warn("Something went wrong..")
+              );
+          }
+        });
     } else if (value1 == "cashOnDelivery") {
-      console.log("Cash on deleviry", items);
+      const userId = localStorage.getItem("localId");
+      let productData = [];
+      let products = cartData[0].cart.map(
+        (pro) => (
+          productData.push({
+            product: pro.product._id,
+            quantity: pro.quantity,
+          }),
+          (totalPrice = pro.quantity * pro.product.price + totalPrice)
+        )
+      );
+
+      const requestOrderData = {
+        userId: userId,
+        cartid: cartData[0]._id,
+        products: productData,
+        contact: locationData[0].phone,
+        amount: {
+          total: totalPrice,
+          currency: "USD",
+        },
+        shipping_address: {
+          recipient_name: locationData[0].fullName,
+          line1: locationData[0].location,
+          city: "",
+          state: "",
+          postal_code: "",
+          country_code: "",
+        },
+      };
+      axios
+        .post(`${BASE_URL}/api/saveOrder`, requestOrderData, {
+          headers: authHeader(),
+        })
+        .then((response) => {
+          if (response.status == 200) {
+            window.location = `/`;
+          }
+        });
     } else {
-      console.log("Another Method");
     }
   }
   return (
@@ -583,30 +645,6 @@ const Checkout = (props) => {
                             <div className="backgrondcolorr">
                               <Grid container spacing={4} columns={16}>
                                 <Grid item xs={10}>
-                                  {orderIdData.length == "0"
-                                    ? console.log("emptyyyy")
-                                    : orderIdData.products.map((data) => (
-                                        <>
-                                          <div style={{ display: "none" }}>
-                                            {
-                                              (((tempPrice =
-                                                data.quantity *
-                                                data.product.price),
-                                              (price = price + tempPrice)),
-                                              items.push({
-                                                name: data.product.name,
-                                                description:
-                                                  data.product.description,
-                                                sku: "sku123",
-                                                price: data.product.price,
-                                                currency: "USD",
-                                                quantity: data.quantity,
-                                              }))
-                                            }
-                                          </div>
-                                        </>
-                                      ))}
-
                                   <div>
                                     <h4>Payment Method</h4>
                                   </div>
@@ -642,7 +680,11 @@ const Checkout = (props) => {
                                     <div style={{ display: "inline-flex" }}>
                                       <p className="pLeft">Sub Total</p> &emsp;
                                       &emsp;
-                                      <p className="pRight">${price}</p>
+                                      <p className="pRight">
+                                        $
+                                        {priceData.state.total ||
+                                          priceData.state.product.amount.total}
+                                      </p>
                                     </div>
                                     <div style={{ display: "inline-flex" }}>
                                       <p className="pLeft">Delivery Fee</p>
@@ -652,16 +694,16 @@ const Checkout = (props) => {
                                     <div style={{ display: "inline-flex" }}>
                                       <p className="pLeft">Total</p> &emsp;
                                       &emsp; &emsp; &emsp;&nbsp;
-                                      <p className="pRight">${price}</p>
+                                      <p className="pRight">
+                                        ${" "}
+                                        {priceData.state.total ||
+                                          priceData.state.product.amount.total}
+                                      </p>
                                     </div>
                                     <br />
                                     <br />
                                     {loading ? (
                                       <div style={{ textAlign: "center" }}>
-                                        {/* <a
-                                        className="checkoutLink"
-                                        href="/checkout"
-                                      > */}
                                         <button
                                           type="submit"
                                           className="cartCheckout"
@@ -669,7 +711,6 @@ const Checkout = (props) => {
                                         >
                                           Checkout
                                         </button>
-                                        {/* </a> */}
                                       </div>
                                     ) : (
                                       <Example />
