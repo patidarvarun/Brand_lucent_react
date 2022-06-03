@@ -211,17 +211,27 @@ function Home(props) {
                               style={{ background: "#f6f6f6" }}
                               className="column1"
                             >
-                              <img
-                                src={`${BASE_URL}/${data.productId.image}`}
-                                style={{ width: "315px", height: "213px" }}
-                              ></img>
-                              <p className="catfooter">{data.productId.name}</p>
-                              <p className="sellfooter">
-                                ${data.discountPrice}
-                              </p>
-                              <p className="sellfooter2">
-                                ${data.productId.price}
-                              </p>
+                              <a
+                                className="withoutLogin"
+                                href={`/productOfferDetail/${data.productId._id}`}
+                              >
+                                <img
+                                  src={`${BASE_URL}/${data.productId.image}`}
+                                  style={{
+                                    width: "315px",
+                                    height: "213px",
+                                  }}
+                                ></img>
+                                <p className="catfooter">
+                                  {data.productId.name}
+                                </p>
+                                <p className="sellfooter">
+                                  ${data.discountPrice}
+                                </p>
+                                <p className="sellfooter2">
+                                  ${data.productId.price}
+                                </p>
+                              </a>
                             </div>
                           </div>
                         ))}

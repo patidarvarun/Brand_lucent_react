@@ -42,6 +42,7 @@ import AddProductOffer from "../component/admin/AddProductOffer";
 import ProductOfferDetail from "../component/admin/ProductOfferDetail";
 import ViewOrderDetail from "../component/user/ViewOrderDetail";
 import ContactUS from "../component/user/ContactUs";
+import ProductOfferDetails from "../component/user/ProductOfferDetails";
 
 class Routers extends Component {
   state = {
@@ -56,9 +57,9 @@ class Routers extends Component {
     return (
       <>
         {/* {this.state.token != null ? ( */}
-        {this.state.token != null ? (
+        {this.state.token !== null ? (
           <Routes>
-            {this.state.role == "true" ? (
+            {this.state.role === "true" ? (
               <Route history={history} exact path="/" element={<Dashboard />} />
             ) : (
               <Route history={history} exact path="/" element={<Home />} />
@@ -217,6 +218,12 @@ class Routers extends Component {
               exact
               path="/userSideBar"
               element={<UserSideBar />}
+            />
+            <Route
+              history={history}
+              exact
+              path="/productOfferDetail/:id"
+              element={<ProductOfferDetails />}
             />
             <Route
               history={history}

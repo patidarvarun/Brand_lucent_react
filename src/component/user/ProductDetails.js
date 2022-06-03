@@ -147,15 +147,6 @@ const ProductDetails = () => {
         product: requestOrderData,
       },
     });
-    // axios
-    //   .post(`${BASE_URL}/api/saveOrder`, requestOrderData, {
-    //     headers: authHeader(),
-    //   })
-    //   .then((response) => {
-    //     if (response.status == 200) {
-    //       window.location = `/checkout/${response.data.orderdData._id}`;
-    //     }
-    //   });
   }
 
   function addToCart(id, data) {
