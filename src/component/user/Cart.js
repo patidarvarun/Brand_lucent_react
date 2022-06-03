@@ -150,7 +150,7 @@ const Cart = () => {
       }
     }
   }
-
+  console.log("cartData", cartData);
   return (
     <>
       <body>
