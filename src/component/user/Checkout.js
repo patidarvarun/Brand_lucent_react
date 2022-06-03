@@ -326,7 +326,10 @@ const Checkout = (props) => {
         })
         .then((response) => {
           if (response.status == 200) {
-            window.location = `/`;
+            toast.success("Order Successfully Placed");
+            setTimeout(() => {
+              window.location = "/";
+            }, 1000);
           }
         });
     } else {
