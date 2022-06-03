@@ -58,7 +58,10 @@ const ViewOrderDetail = () => {
                                 Quantity : {product.quantity}
                               </p>
                               <p className="orderCss">
-                                ${product.product.price}
+                                $
+                                {product.product.offerPrice !== 0
+                                  ? product.product.offerPrice
+                                  : product.product.price}
                               </p>
                               <p className="orderstatus">
                                 Status&nbsp;
@@ -130,7 +133,10 @@ const ViewOrderDetail = () => {
                               <div>
                                 <p className="orderPera1">
                                   Order Total &emsp; &emsp; &nbsp; &emsp;{" "}
-                                  {product.quantity * product.product.price}
+                                  {product.product.offerPrice !== 0
+                                    ? product.product.offerPrice *
+                                      product.quantity
+                                    : product.product.price * product.quantity}
                                   {".00"}
                                 </p>
                               </div>
@@ -143,7 +149,10 @@ const ViewOrderDetail = () => {
                               <div>
                                 <p className="orderPera1">
                                   Total Fee &emsp; &emsp; &emsp; &emsp; &nbsp;
-                                  {product.quantity * product.product.price}
+                                  {product.product.offerPrice !== 0
+                                    ? product.product.offerPrice *
+                                      product.quantity
+                                    : product.product.price * product.quantity}
                                   {".00"}
                                 </p>
                               </div>

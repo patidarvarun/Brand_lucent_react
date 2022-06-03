@@ -194,7 +194,10 @@ const OrderPage = (props) => {
                                         <h2>{item.product.name}</h2>
                                         <p className="orderCs">#{data._id}</p>
                                         <p className="orderCss">
-                                          ${item.product.price}
+                                          $
+                                          {item.product.offerPrice !== 0
+                                            ? item.product.offerPrice
+                                            : item.product.price}
                                         </p>
                                         <p className="orderCs">
                                           Quantity &nbsp; {item.quantity}
@@ -261,7 +264,10 @@ const OrderPage = (props) => {
                                         <h2>{item.product.name}</h2>
                                         <p className="orderCs">#{item._id}</p>
                                         <p className="orderCss">
-                                          ${item.product.price}
+                                          $
+                                          {item.product.offerPrice !== 0
+                                            ? item.product.offerPrice
+                                            : item.product.price}
                                         </p>
                                         <p className="orderCs">
                                           Quantity &nbsp; {item.quantity}
@@ -269,12 +275,7 @@ const OrderPage = (props) => {
                                         &emsp; &emsp;
                                         <br />
                                       </div>
-                                      {/* <a
-                                        href={`/viewOrder/${item._id}`}
-                                        className="linkcsss"
-                                      >
-                                        View Details
-                                      </a> */}
+
                                       <a
                                         href=""
                                         className="linkcsss"

@@ -329,9 +329,10 @@ button.detailPro {
 }
 .pRight {
   text-align: right !important;
-  margin-left: 99px;
+  margin: 22px 0px 0px 80px !important;
   font-size: x-large;
-  padding: 20px;
+  /* margin-left: 99px; */
+  /* padding: 20px; */
 }
 .checkoutLink {
   text-decoration: none;

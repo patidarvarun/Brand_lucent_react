@@ -18,9 +18,7 @@ import "../../style/css/sidebar.css";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { experimentalStyled as styled } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
-import Paper from "@mui/material/Paper";
 import "./user.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -37,12 +35,6 @@ function authHeader() {
   }
 }
 
-const Item = styled(Paper)(({ theme }) => ({
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
 const Cart = () => {
   const navigate = useNavigate();
   const CartData = useSelector(
@@ -57,7 +49,6 @@ const Cart = () => {
   const dispatch = useDispatch();
   let tempPrice = 0;
   let price = 0;
-  let initialQuantity = 0;
   const getCartDetail = async () => {
     const id = localStorage.getItem("localId");
     const response = await axios
@@ -94,7 +85,7 @@ const Cart = () => {
         },
       })
       .then((response) =>
-        response.status == "200"
+        response.status === 200
           ? (window.location = "/cart")
           : toast.warn("Something went wrong..")
       );
@@ -109,7 +100,7 @@ const Cart = () => {
         headers: authHeader(),
       })
       .then((response) =>
-        response.status == "200"
+        response.status === 200
           ? (window.location = "/cart")
           : toast.warn("Something went wrong..")
       );
@@ -143,14 +134,14 @@ const Cart = () => {
             headers: authHeader(),
           })
           .then((response) =>
-            response.status == "200"
+            response.status === 200
               ? getCartDetail()
               : toast.warn("Something went wrong..")
           );
       }
     }
   }
-  console.log("cartData", cartData);
+
   return (
     <>
       <body>
@@ -179,7 +170,10 @@ const Cart = () => {
                         <div className="cartdiv">
                           <div style={{ display: "none" }}>
                             {
-                              ((tempPrice = item.quantity * item.product.price),
+                              ((tempPrice =
+                                item.product.offerPrice !== 0
+                                  ? item.product.offerPrice * item.quantity
+                                  : item.product.price * item.quantity),
                               (price = price + tempPrice))
                             }
                           </div>
@@ -202,7 +196,7 @@ const Cart = () => {
                             <div style={{ display: "inline-flex" }}>
                               <div className="borderCart2">
                                 &nbsp;
-                                {item.quantity == "1" ? (
+                                {item.quantity === "1" ? (
                                   <button
                                     disabled
                                     className="buttIcon"
@@ -253,7 +247,13 @@ const Cart = () => {
                             &emsp; &emsp; &emsp; &emsp;
                             <div>
                               <p className="pname"> price </p>
-                              <p className="pname"> $ {item.product.price} </p>
+                              <p className="pname">
+                                {" "}
+                                $
+                                {item.product.offerPrice !== 0
+                                  ? item.product.offerPrice
+                                  : item.product.price}
+                              </p>
                             </div>
                             &emsp; &emsp; &emsp; &emsp;
                             <a
@@ -310,7 +310,7 @@ const Cart = () => {
                       <hr style={{ color: "rgb(70 169 2)" }} />
                       <div style={{ display: "inline-flex" }}>
                         <p className="pLeft"> Total </p> &emsp; &emsp; &emsp;
-                        &emsp; &nbsp; <p className="pRight"> $ {price} </p>
+                        &emsp; &nbsp; <p className="pRight"> ${price} </p>
                       </div>
                       <br />
                       <br />

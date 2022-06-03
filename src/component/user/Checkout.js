@@ -211,6 +211,7 @@ const Checkout = (props) => {
       .then((response) => (response.status == "200" ? handleTab3() : ""));
   }
   let totalPrice = 0;
+  let tempPrice = 0;
   function handlePayment() {
     if (value1 == "card") {
       const userId = localStorage.getItem("localId");
@@ -222,12 +223,20 @@ const Checkout = (props) => {
             product: pro.product._id,
             quantity: pro.quantity,
           }),
-          (totalPrice = pro.quantity * pro.product.price + totalPrice),
+          ((tempPrice =
+            pro.product.offerPrice !== 0
+              ? pro.product.offerPrice * pro.quantity
+              : pro.product.price * pro.quantity),
+          (totalPrice = totalPrice + tempPrice)),
+          // (totalPrice = pro.quantity * pro.product.price + totalPrice),
           items.push({
             name: pro.product.name,
             description: pro.product.description,
             sku: "sku123",
-            price: pro.product.price,
+            price:
+              pro.product.offerPrice !== 0
+                ? pro.product.offerPrice
+                : pro.product.price,
             currency: "USD",
             quantity: pro.quantity,
           })
@@ -284,8 +293,13 @@ const Checkout = (props) => {
             product: pro.product._id,
             quantity: pro.quantity,
           }),
-          (totalPrice = pro.quantity * pro.product.price + totalPrice)
+          ((tempPrice =
+            pro.product.offerPrice !== 0
+              ? pro.product.offerPrice * pro.quantity
+              : pro.product.price * pro.quantity),
+          (totalPrice = totalPrice + tempPrice))
         )
+        // (totalPrice = pro.quantity * pro.product.price + totalPrice)
       );
 
       const requestOrderData = {
