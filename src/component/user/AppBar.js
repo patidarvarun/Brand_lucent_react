@@ -203,7 +203,7 @@ export default function HomeHeader() {
 
   const femmecubatorLogo = (
     <Typography variant="h6" component="h1" className={logo}>
-      {/* <img width="130px" src="logo2.png"></img> */}
+      {/* <img width="130px" src="/logo2.png"></img> */}
       <a href="/" className="home">
         Home
       </a>

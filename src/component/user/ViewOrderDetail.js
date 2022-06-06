@@ -14,7 +14,7 @@ const ViewOrderDetail = () => {
   const location = useLocation();
   let product = location.state.product;
   let order = location.state.order;
-  console.log("porderroduct", order.paymentMethod);
+
   return (
     <>
       <body>
@@ -58,7 +58,10 @@ const ViewOrderDetail = () => {
                                 Quantity : {product.quantity}
                               </p>
                               <p className="orderCss">
-                                ${product.product.price}
+                                $
+                                {product.product.offerPrice !== 0
+                                  ? product.product.offerPrice
+                                  : product.product.price}
                               </p>
                               <p className="orderstatus">
                                 Status&nbsp;
@@ -97,7 +100,16 @@ const ViewOrderDetail = () => {
                                     <p className="orderPera1">
                                       Mpesa &emsp;&emsp;&emsp;&emsp; &emsp;
                                       &emsp;
-                                      {order.paymentMethod}
+                                      {order.paymentMethod === "paypal"
+                                        ? "Paypal"
+                                        : order.paymentMethod}
+                                      {
+                                        ""
+                                        //   order.paymentMethod
+                                        //   .charAt(0)
+                                        //   .toUpperCase() +
+                                        //   order.paymentMethod.slice(1)
+                                      }
                                     </p>
                                   </div>
                                   <div>
@@ -115,7 +127,13 @@ const ViewOrderDetail = () => {
                                       {order.contact}
                                     </p>
                                   </div>
-                                  <h5 className="cashon">Cash On Delivery</h5>
+                                  {order.shipping_address.line1 === "" ? (
+                                    <h5 className="paymentNot">
+                                      Payment Not Done
+                                    </h5>
+                                  ) : (
+                                    <h5 className="cashon">Cash On Delivery</h5>
+                                  )}
                                 </Fragment>
                               )}
                             </div>
@@ -130,7 +148,10 @@ const ViewOrderDetail = () => {
                               <div>
                                 <p className="orderPera1">
                                   Order Total &emsp; &emsp; &nbsp; &emsp;{" "}
-                                  {product.quantity * product.product.price}
+                                  {product.product.offerPrice !== 0
+                                    ? product.product.offerPrice *
+                                      product.quantity
+                                    : product.product.price * product.quantity}
                                   {".00"}
                                 </p>
                               </div>
@@ -143,7 +164,10 @@ const ViewOrderDetail = () => {
                               <div>
                                 <p className="orderPera1">
                                   Total Fee &emsp; &emsp; &emsp; &emsp; &nbsp;
-                                  {product.quantity * product.product.price}
+                                  {product.product.offerPrice !== 0
+                                    ? product.product.offerPrice *
+                                      product.quantity
+                                    : product.product.price * product.quantity}
                                   {".00"}
                                 </p>
                               </div>

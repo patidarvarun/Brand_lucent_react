@@ -57,9 +57,9 @@ class Routers extends Component {
     return (
       <>
         {/* {this.state.token != null ? ( */}
-        {this.state.token != null ? (
+        {this.state.token !== null ? (
           <Routes>
-            {this.state.role == "true" ? (
+            {this.state.role === "true" ? (
               <Route history={history} exact path="/" element={<Dashboard />} />
             ) : (
               <Route history={history} exact path="/" element={<Home />} />
