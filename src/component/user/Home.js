@@ -1,9 +1,6 @@
 import { Box, Container, Grid, Stack } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import InstagramIcon from "@mui/icons-material/Instagram";
 import { useDispatch, useSelector } from "react-redux";
 import { BASE_URL } from "../../config/config";
 import { Link } from "react-router-dom";
@@ -269,10 +266,12 @@ function Home(props) {
                               style={{ background: "#f6f6f6" }}
                               className="column1"
                             >
-                              <img
-                                src={`${BASE_URL}/${data.image}`}
-                                style={{ width: "315px", height: "213px" }}
-                              ></img>
+                              <a href={`/productDetail/${data._id}`}>
+                                <img
+                                  src={`${BASE_URL}/${data.image}`}
+                                  style={{ width: "315px", height: "213px" }}
+                                ></img>
+                              </a>
                               <p className="catfooter">{data.name}</p>
                               <p className="sellfooter">${data.price}</p>
                             </div>
@@ -313,10 +312,12 @@ function Home(props) {
                               style={{ background: "#f6f6f6" }}
                               className="column1"
                             >
-                              <img
-                                src={`${BASE_URL}/${data.image}`}
-                                style={{ width: "315px", height: "213px" }}
-                              ></img>
+                              <a href={`/productDetail/${data._id}`}>
+                                <img
+                                  src={`${BASE_URL}/${data.image}`}
+                                  style={{ width: "315px", height: "213px" }}
+                                ></img>
+                              </a>
                               <p className="catfooter">{data.name}</p>
                               <p className="sellfooter">${data.price}</p>
                             </div>

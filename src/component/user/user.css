@@ -47,6 +47,13 @@
   text-align: center;
   padding: 12px;
 }
+.catfooterr {
+  font-size: 25px;
+  color: #080808;
+  margin-Top:15px
+  /* text-align: center; */
+  /* padding: 12px; */
+}
 .menuButton1 {
   background: none !important;
   width: 6.3em !important;
@@ -80,6 +87,11 @@
   font-size: 20px;
   color: #000000;
   text-align: center;
+}
+.sellfooterr {
+  font-size: 25px;
+  color: #000000;
+  /* text-align: center; */
 }
 .sellfooter2 {
   font-size: 20px;
@@ -242,6 +254,13 @@
 .borderr {
   border: 1px solid #56ad56;
   border-radius: 33px;
+  padding: 3px;
+  width: fit-content;
+}
+.borderrr {
+  border: 1px solid #56ad56;
+  border-radius: 33px;
+  height: 50px;
   padding: 3px;
   width: fit-content;
 }
@@ -780,4 +799,12 @@ h4.paymentHeading {
   color: rgb(255 0 0) !important;
   margin-top: 25px;
   box-shadow: 0 0 10px rgb(104, 143, 78) !important;
+}
+.main-panell{
+  transition: width 0.25s ease, margin 0.25s ease;
+  width: calc(100% - 235px);
+  min-height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
 }

@@ -66,17 +66,18 @@ class Login extends Component {
           localStorage.setItem("name", res.data.name);
           localStorage.setItem("localId", res.data._id);
           localStorage.setItem("role", res.data.role);
-
           if (res.data.role === true) {
             toast.success("Login Successfully");
             setTimeout(() => {
               window.location = "/dashboard";
             }, 1000);
-          } else {
+          } else if (res.data.status === "approved") {
             toast.success("Login Successfully");
             setTimeout(() => {
               window.location = "/";
             }, 1000);
+          } else {
+            toast.warn("Admin doesn't Approved your account.");
           }
         } else {
           toast.error("Bad Credential..");
