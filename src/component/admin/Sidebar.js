@@ -105,6 +105,13 @@ const Sidebar = () => {
                     Order Details{" "}
                   </a>
                 </li>
+                <li className="nav-item">
+                  {" "}
+                  <a className="nav-link" href="/contactUsDetail">
+                    {" "}
+                    ContactUs Details{" "}
+                  </a>
+                </li>
               </ul>
             </div>
           </Accordion.Body>

@@ -221,6 +221,21 @@ export function getOrders(callback) {
       });
   };
 }
+export function getContacts(callback) {
+  const request = axios.get(`${API.getContactUs}`, {
+    headers: authHeader(),
+  });
+  return (dispatch) => {
+    request
+      .then((res) => {
+        callback(res);
+      })
+      .catch(function (error) {
+        console.log("error: ", error.response);
+        callback(error);
+      });
+  };
+}
 
 export function getProductDetail(callback) {
   const request = axios.get(`${API.getProductoff}`, {
@@ -285,6 +300,21 @@ export function deleteProduct(id, callback) {
 
 export function deleteProductOffer(id, callback) {
   const request = axios.delete(`${API.deteleprodOffer}/${id}`, {
+    headers: authHeader(),
+  });
+  return (dispatch) => {
+    request
+      .then((res) => {
+        callback(res);
+      })
+      .catch(function (error) {
+        console.log("error: ", error.response);
+        callback(error);
+      });
+  };
+}
+export function deleteContactUsData(id, callback) {
+  const request = axios.delete(`${API.deteleContactUs}/${id}`, {
     headers: authHeader(),
   });
   return (dispatch) => {

@@ -8,6 +8,7 @@ export const API = {
   login: `${BASE_URL}/api/login`,
   reset: `${BASE_URL}/api/sendMailtoRestPw`,
   resetPassword: `${BASE_URL}/api/resetPassword`,
+  contactus: `${BASE_URL}/api/contactUs`,
 
   getUser: `${BASE_URL}/api/getUsers`,
   getUserById: `${BASE_URL}/api/getUser`,
@@ -60,4 +61,7 @@ export const API = {
   getorder: `${BASE_URL}/api/getOrders/`,
   getAdminOrder: `${BASE_URL}/api/getAllOrders`,
   orderidDetails: `${BASE_URL}/api/getUserOrder/`,
+
+  getContactUs: `${BASE_URL}/api/getContactUsers`,
+  deteleContactUs: `${BASE_URL}/api/deleteContact`,
 };

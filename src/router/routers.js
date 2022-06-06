@@ -43,6 +43,7 @@ import ProductOfferDetail from "../component/admin/ProductOfferDetail";
 import ViewOrderDetail from "../component/user/ViewOrderDetail";
 import ContactUS from "../component/user/ContactUs";
 import ProductOfferDetails from "../component/user/ProductOfferDetails";
+import ContactUsDetails from "../component/admin/ContactUsDetails";
 
 class Routers extends Component {
   state = {
@@ -193,6 +194,12 @@ class Routers extends Component {
               exact
               path="/orderDetail"
               element={<OrderDetail />}
+            />
+            <Route
+              history={history}
+              exact
+              path="/contactUsDetail"
+              element={<ContactUsDetails />}
             />
             <Route
               history={history}

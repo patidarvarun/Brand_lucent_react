@@ -158,20 +158,20 @@ class AddProductOffer extends Component {
                         minWidth: " -webkit - fill - available !important",
                       }}
                     >
-                      {this.state.productData.map((item) => (
-                        // let data = item.cat_id._id == this.state.cat_id;
-                        // return data == true ? (
-                        <MenuItem
-                          id="pro"
-                          name="pro"
-                          value={item.name}
-                          onClick={() => this.handlePro(item._id)}
-                          key={item.name}
-                        >
-                          {item.name}
-                        </MenuItem>
-                        // ) : null;
-                      ))}
+                      {this.state.productData.map((item) => {
+                        let data = item.cat_id._id === this.state.cat_id;
+                        return data == true ? (
+                          <MenuItem
+                            id="pro"
+                            name="pro"
+                            value={item.name}
+                            onClick={() => this.handlePro(item._id)}
+                            key={item.name}
+                          >
+                            {item.name}
+                          </MenuItem>
+                        ) : null;
+                      })}
                     </Select>
                     <span id="demo2"></span>
                   </>
