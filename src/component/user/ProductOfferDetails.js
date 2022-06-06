@@ -58,12 +58,9 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-const ProductDetails = () => {
+const ProductOfferDetails = () => {
   const navigate = useNavigate();
-  const ProductDetail = useSelector(
-    (state) => state.allProductDetail.ProductDetails.product
-  );
-  const dispatch = useDispatch();
+
   const { id } = useParams();
   const [productDetails, setProductDetails] = useState([]);
   const [count, setCount] = React.useState(1);
@@ -85,7 +82,6 @@ const ProductDetails = () => {
       })
       .catch((err) => {});
     setProductDetails(response.data.product);
-    dispatch(getProductDetails(response.data));
     handleCount();
   };
 
@@ -142,6 +138,7 @@ const ProductDetails = () => {
         currency: "USD",
       },
     };
+
     navigate("/checkout", {
       state: {
         product: requestOrderData,
@@ -175,7 +172,7 @@ const ProductDetails = () => {
                   <Grid item xs={8}>
                     <div style={{ display: "none" }}>
                       {
-                        ((tempPrice = count * productDetails.price),
+                        ((tempPrice = count * productDetails.offerPrice),
                         (price = price + tempPrice))
                       }
                     </div>
@@ -195,7 +192,7 @@ const ProductDetails = () => {
                     <div style={{ textAlign: "left" }}>
                       <h3>{productDetails.name}</h3>
                       <p className="cartHead">Price</p>
-                      <h3>${productDetails.price}</h3>
+                      <h3>${productDetails.offerPrice}</h3>
                       <p>{productDetails.description}</p>
                       <p className="cartHead">Quantity</p>
                       <div style={{ display: "inline-flex" }}>
@@ -259,7 +256,9 @@ const ProductDetails = () => {
                         <br />
 
                         <h2>{productDetails.name}</h2>
-                        <p className="cartPrice">${productDetails.price}</p>
+                        <p className="cartPrice">
+                          ${productDetails.offerPrice}
+                        </p>
                         <button
                           onClick={() => handleData()}
                           type="submit"
@@ -287,4 +286,4 @@ const ProductDetails = () => {
   );
 };
 
-export default ProductDetails;
+export default ProductOfferDetails;
