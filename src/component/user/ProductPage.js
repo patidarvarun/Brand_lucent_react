@@ -1,7 +1,8 @@
 import * as React from "react";
-import UserSideBar from "./UserSideBar";
 import { useEffect, useState } from "react";
 import AppBar from "./AppBar";
+import Checkbox from "@mui/material/Checkbox";
+import { useLocation } from "react-router";
 import "../../style/vendors/feather/feather.css";
 import "../../style/vendors/ti-icons/css/themify-icons.css";
 import "../../style/vendors/css/vendor.bundle.base.css";
@@ -44,16 +45,23 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 const ProductPage = () => {
   const ProducttData = useSelector((state) => state.allProduct.ProdData);
+  const location = useLocation();
   // const catData = useSelector((state) => state.allCat.catdata);
-  const { id } = useParams();
   const dispatch = useDispatch();
   const [product, setProduct] = useState([]);
   const [count, setCount] = useState(1);
-  const [count1, setCount1] = useState(1);
   const [idid, setIdd] = useState([]);
   const [cat, setCat] = useState([]);
+  const [catIdd, setCatIdd] = useState("");
+  const [visible, setVisible] = useState(6);
+  const [isdefaultAllChecked, setIsdefaultAllChecked] = useState(false);
   let name = [];
-  const getProduct = async () => {
+
+  const loadMore = () => {
+    setVisible(visible + 3);
+  };
+
+  const getProduct = async (id) => {
     const response = await axios
       .get(
         `${BASE_URL}/api/getProductBycategory/${id}
@@ -76,8 +84,18 @@ const ProductPage = () => {
     setCat(response.data);
   };
 
+  const getallproduct = async () => {
+    const response = await axios
+      .get(`${BASE_URL}/api/getProducts`, {
+        headers: authHeader(),
+      })
+      .catch((err) => {});
+    // setAllProd(response.data);
+    setProduct(response.data);
+  };
   useEffect(() => {
-    getProduct();
+    setCatIdd(location.state.catId);
+    getProduct(location.state.catId);
     getCategories();
   }, []);
   {
@@ -85,11 +103,18 @@ const ProductPage = () => {
       cat.filter((bb) => (aa.cat_id == bb._id ? name.push(bb.name) : ""))
     );
   }
-
+  const handleChange = (item) => {
+    setCatIdd(item._id);
+    setIsdefaultAllChecked(false);
+    getProduct(item._id);
+    // window.location.replace("/productPage/" + id);
+  };
+  const handleChange1 = () => {
+    setCatIdd("");
+    setIsdefaultAllChecked(true);
+    getallproduct();
+  };
   function increaseQuantity(id) {
-    // const divId = document.getElementById(id);
-    // divId.textContent = count;
-
     product.filter((idd) => (id == idd._id ? setIdd(idd._id) : ""));
     product.filter((idd) =>
       id == idd._id ? setCount(count + 1) : console.log("BBBB")
@@ -103,7 +128,7 @@ const ProductPage = () => {
   }
   function cart(id, data) {
     // console.log("#############datacart", data);
-    console.log("ADD TO CART", count);
+    // console.log("ADD TO CART", count);
     const userId = localStorage.getItem("localId");
     const requestData = { user: userId, product: id, quantity: data };
     axios
@@ -112,31 +137,53 @@ const ProductPage = () => {
       })
       .then((response) =>
         response.status == "200"
-          ? toast.success("Product added successfully") &&
-            setTimeout(() => {
-              window.location.reload();
-            }, 1000)
+          ? toast.success("Product added successfully")
           : toast.warn("Something went wrong..")
       );
   }
-
   return (
     <>
       <body>
         <div className="container-scroller">
           <AppBar />
           <div className="container-fluid page-body-wrapper">
-            <UserSideBar data={product} />
+            <nav className="sidebar sidebar-offcanvas" id="sidebar">
+              <div className="sidebarColor">
+                <h2>Category</h2>
+                <Checkbox
+                  value="all"
+                  checked={isdefaultAllChecked}
+                  onClick={() => handleChange1()}
+                  inputProps={{ "aria-label": "controlled" }}
+                />
+                All
+                {cat.map((items) => (
+                  <div>
+                    <Checkbox
+                      checked={items._id === catIdd ? true : false}
+                      onClick={() => handleChange(items)}
+                      inputProps={{ "aria-label": "controlled" }}
+                    />
+
+                    {items.name}
+                  </div>
+                ))}
+              </div>
+            </nav>
             <div className="main-panel">
               <div className="content-wrapper">
                 <Box sx={{ flexGrow: 1 }}>
-                  <h1 className="homeHeading">Home/{name[0]}</h1>
+                  {name && name.length === 0 ? (
+                    <h1 className="homeHeading">Home{name[0]}</h1>
+                  ) : (
+                    <h1 className="homeHeading">Home/{name[0]}</h1>
+                  )}
                   <Grid
                     container
                     spacing={{ xs: 2, md: 3 }}
                     columns={{ xs: 4, sm: 8, md: 12 }}
                   >
-                    {product.map((item) => (
+                    {product.slice(0, visible).map((item) => (
                       <Grid item xs={2} sm={4} md={4}>
                         <Item>
                           <a href={`/productDetail/${item._id}`}>
@@ -180,6 +227,13 @@ const ProductPage = () => {
                       </Grid>
                     ))}
                   </Grid>
+                  <div className="divAlignment">
+                    {visible < product.length && (
+                      <button className="loadmore" onClick={loadMore}>
+                        Load More
+                      </button>
+                    )}
+                  </div>
                 </Box>
               </div>
             </div>

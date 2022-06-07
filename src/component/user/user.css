@@ -808,3 +808,15 @@ h4.paymentHeading {
   flex-direction: column;
   margin: 0 auto;
 }
+button.loadmore{
+  border: none;
+  margin-top: 8em;
+  color: white;
+  background: rgb(104, 143, 78);
+  width: 170px;
+  height: 61px;
+  border-radius: 5px;
+}
+.divAlignment{
+  text-align: center;
+}

@@ -1,5 +1,4 @@
 import * as React from "react";
-import UserSideBar from "./UserSideBar";
 import { useEffect, useState } from "react";
 import AppBar from "./AppBar";
 import Footerr from "./Footerr";
@@ -29,7 +28,6 @@ import Carousel from "react-multi-carousel";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Button, Modal } from "@mui/material";
-import ProductPage from "./ProductPage";
 toast.configure();
 
 function authHeader() {
@@ -127,7 +125,7 @@ const ProductDetails = () => {
   function decreaseQuantityy(id) {
     if (count1 <= 1) {
     } else {
-      setCount(count1 - 1);
+      setCount1(count1 - 1);
     }
   }
   function cart(id, data) {
@@ -139,12 +137,12 @@ const ProductDetails = () => {
       })
       .then((response) =>
         response.status == "200"
-          ? toast.success("Product added successfully") &&
-            setTimeout(() => {
-              window.location.reload();
-            }, 1000)
+          ? toast.success("Product added successfully")
           : toast.warn("Something went wrong..")
       );
+    // setTimeout(() => {
+    //   window.location.reload();
+    // }, 1000)
   }
   const getProductDetail = async () => {
     const response = await axios

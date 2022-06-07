@@ -2,6 +2,7 @@ import { Box, Container, Grid, Stack } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../config/config";
 import { Link } from "react-router-dom";
 import {
@@ -29,6 +30,7 @@ function authHeader() {
   }
 }
 function Home(props) {
+  const navigate = useNavigate();
   const banner = useSelector((state) => state.allBanners.banData);
   const catData = useSelector((state) => state.allCat.catdata);
   const sellProduct = useSelector((state) => state.allSelling.sellingData);
@@ -135,7 +137,11 @@ function Home(props) {
   }, []);
 
   function greetUser(idd) {
-    // console.log("Hi there, user!", idd);
+    navigate("/productPage", {
+      state: {
+        catId: idd,
+      },
+    });
     setIdd(idd);
     <ProductPage id={id1} />;
   }
@@ -165,7 +171,7 @@ function Home(props) {
                           style={{ background: "#f6f6f6" }}
                           className="column1"
                         >
-                          <a href={`/productPage/${data._id}`}>
+                          <a href="">
                             <img
                               onClick={() => greetUser(data._id)}
                               src={`${BASE_URL}/${data.image}`}
@@ -534,10 +540,12 @@ function Home(props) {
                               style={{ background: "#f6f6f6" }}
                               className="column1"
                             >
-                              <img
-                                src={`${BASE_URL}/${data.image}`}
-                                style={{ width: "315px", height: "213px" }}
-                              ></img>
+                              <a className="withoutLogin" href="/login">
+                                <img
+                                  src={`${BASE_URL}/${data.image}`}
+                                  style={{ width: "315px", height: "213px" }}
+                                ></img>
+                              </a>
                               <p className="catfooter">{data.name}</p>
                               <p className="sellfooter">${data.price}</p>
                             </div>

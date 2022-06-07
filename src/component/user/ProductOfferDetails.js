@@ -1,10 +1,10 @@
 import * as React from "react";
-import UserSideBar from "./UserSideBar";
 import { useEffect, useState } from "react";
 import AppBar from "./AppBar";
 import Footerr from "./Footerr";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router";
+import Carousel from "react-multi-carousel";
 import axios from "axios";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -28,7 +28,6 @@ import "./user.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Button, Modal } from "@mui/material";
-import ProductPage from "./ProductPage";
 toast.configure();
 
 function authHeader() {
@@ -65,7 +64,12 @@ const ProductOfferDetails = () => {
   const [productDetails, setProductDetails] = useState([]);
   const [count, setCount] = React.useState(1);
   const [open, setOpen] = React.useState(false);
+  const [popular, setPopular] = useState([]);
+  const [count1, setCount1] = useState(1);
+  const [idid, setIdd] = useState([]);
   const [order, setOrder] = useState([]);
+  const [product, setproduct] = useState([]);
+
   let price = 0;
   let tempPrice = 0;
   const handleOpen = () => {
@@ -74,7 +78,23 @@ const ProductOfferDetails = () => {
   const handleClose = () => {
     setOpen(false);
   };
-
+  const responsive = {
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 4,
+      slidesToSlide: 3, // optional, default to 1.
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 2,
+      slidesToSlide: 2, // optional, default to 1.
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1,
+      slidesToSlide: 1, // optional, default to 1.
+    },
+  };
   const getProductDetail = async () => {
     const response = await axios
       .get(`${BASE_URL}/api/productDeatils?productid=${id} `, {
@@ -87,8 +107,19 @@ const ProductOfferDetails = () => {
 
   useEffect(() => {
     getProductDetail();
+    getProduct();
+    getPopularProducts();
     getCartDetail();
   }, []);
+
+  const getProduct = async () => {
+    const response = await axios
+      .get(`${BASE_URL}/api/getProducts`, {
+        headers: authHeader(),
+      })
+      .catch((err) => {});
+    setproduct(response.data);
+  };
 
   function increaseQuantity(id) {
     setCount(count + 1);
@@ -99,7 +130,43 @@ const ProductOfferDetails = () => {
       setCount(count - 1);
     }
   }
+  const getPopularProducts = async () => {
+    const response = await axios
+      .get(`${BASE_URL}/api/getPopular`, {
+        headers: authHeader(),
+      })
+      .catch((err) => {});
 
+    setPopular(response.data.popularProduct);
+  };
+  function increaseQuantityy(id) {
+    product.filter((idd) => (id == idd._id ? setIdd(idd._id) : ""));
+    product.filter((idd) =>
+      id == idd._id ? setCount1(count1 + 1) : console.log("AAAAAA")
+    );
+  }
+  function decreaseQuantityy(id) {
+    if (count1 <= 1) {
+    } else {
+      setCount1(count1 - 1);
+    }
+  }
+  function cart(id, data) {
+    const userId = localStorage.getItem("localId");
+    const requestData = { user: userId, product: id, quantity: data };
+    axios
+      .post(`${BASE_URL}/api/addTocart`, requestData, {
+        headers: authHeader(),
+      })
+      .then((response) =>
+        response.status == "200"
+          ? toast.success("Product added successfully")
+          : toast.warn("Something went wrong..")
+      );
+    // setTimeout(() => {
+    //   window.location.reload();
+    // }, 1000)
+  }
   function handleCount() {
     axios
       .post(`${BASE_URL}/api/addvisit?productid=${id}`, {
@@ -165,8 +232,8 @@ const ProductOfferDetails = () => {
         <div className="container-scroller">
           <AppBar />
           <div className="container-fluid page-body-wrapper">
-            <UserSideBar />
-            <div className="main-panel">
+            {/* <UserSideBar /> */}
+            <div className="main-panell">
               <div className="content-wrapper">
                 <Grid container spacing={2} columns={16}>
                   <Grid item xs={8}>
@@ -275,6 +342,111 @@ const ProductOfferDetails = () => {
                       </Box>
                     </Modal>
                   </Grid>
+                </Grid>
+                <br />
+                <br />
+                <br />
+                <Grid
+                  container
+                  spacing={4}
+                  columns={16}
+                  className="bordercsscart"
+                >
+                  {popular.length === 0 ? (
+                    ""
+                  ) : (
+                    <Grid
+                      item
+                      xs={16}
+                      className="bordercss  sliderClass sliderClass2"
+                    >
+                      {" "}
+                      <h2 style={{ marginTop: "3em" }}>
+                        <b>Product you may like</b>
+                      </h2>
+                      <Carousel
+                        swipeable={false}
+                        draggable={false}
+                        responsive={responsive}
+                        infinite={true}
+                        autoPlay={false}
+                        keyBoardControl={true}
+                        customTransition="all .5"
+                        transitionDuration={500}
+                        containerClass="carousel-container"
+                        removeArrowOnDeviceType={["tablet", "mobile"]}
+                        dotListClass="custom-dot-list-style"
+                        itemClass="carousel-item-padding-40-px"
+                      >
+                        {popular &&
+                          popular.length &&
+                          popular.map((data) => (
+                            <div className="row1">
+                              <div
+                                style={{ background: "#f6f6f6" }}
+                                className="column1"
+                              >
+                                <a href={`/productDetail/${data._id}`}>
+                                  <img
+                                    src={`${BASE_URL}/${data.image}`}
+                                    style={{ width: "300px", height: "213px" }}
+                                  ></img>
+                                </a>
+
+                                <p className="catfooterr">{data.name}</p>
+                                <p className="sellfooterr">${data.price}</p>
+                                <div style={{ display: "inline-flex" }}>
+                                  <div className="borderrr" id={data._id}>
+                                    <button
+                                      className="buttIcon"
+                                      onClick={() =>
+                                        decreaseQuantityy(data._id)
+                                      }
+                                    >
+                                      <RemoveIcon
+                                        style={{
+                                          fontSize: "30px",
+                                          marginTop: "-12px",
+                                        }}
+                                      />
+                                    </button>
+                                    &emsp;&nbsp; &emsp;&nbsp;
+                                    <span
+                                      style={{
+                                        fontSize: "26px",
+                                      }}
+                                      className=""
+                                    >
+                                      {data._id === idid ? count1 : "1"}
+                                    </span>
+                                    &emsp;&nbsp;&emsp;&nbsp;
+                                    <button
+                                      className="buttIcon"
+                                      onClick={() =>
+                                        increaseQuantityy(data._id)
+                                      }
+                                    >
+                                      <AddIcon
+                                        style={{
+                                          fontSize: "30px",
+                                          marginTop: "-12px",
+                                        }}
+                                      />
+                                    </button>
+                                  </div>
+                                  &emsp; &emsp; &emsp;
+                                  <img
+                                    onClick={() => cart(data._id, count1)}
+                                    src="/Cart.png"
+                                    style={{ width: "40px", cursor: "pointer" }}
+                                  ></img>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                      </Carousel>
+                    </Grid>
+                  )}
                 </Grid>
               </div>
             </div>

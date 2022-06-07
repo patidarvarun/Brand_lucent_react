@@ -39,7 +39,7 @@ const TopNav = () => {
           <span className="icon-menu"></span>
         </button> */}
         <ul className="navbar-nav mr-lg-2">
-          <li className="nav-item nav-search d-none d-lg-block">
+          {/* <li className="nav-item nav-search d-none d-lg-block">
             <div className="input-group">
               <div
                 className="input-group-prepend hover-cursor"
@@ -59,7 +59,7 @@ const TopNav = () => {
                 aria-describedby="search"
               />
             </div>
-          </li>
+          </li> */}
         </ul>
         <ul className="navbar-nav navbar-nav-right">
           <Dropdown className="header-toggle">

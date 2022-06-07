@@ -118,7 +118,7 @@ const Cart = () => {
   function decreaseQuantityy(id) {
     if (count1 <= 1) {
     } else {
-      setCount(count1 - 1);
+      setCount1(count1 - 1);
     }
   }
   function cart(id, data) {
@@ -448,7 +448,7 @@ const Cart = () => {
                                   style={{ width: "315px", height: "213px" }}
                                 ></img>
                               </a>
-                            
+
                               <p className="catfooterr">{data.name}</p>
                               <p className="sellfooterr">${data.price}</p>
                               <div style={{ display: "inline-flex" }}>

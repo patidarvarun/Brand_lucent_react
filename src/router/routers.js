@@ -29,11 +29,11 @@ import Home from "../component/user/Home";
 import Logout from "../common/Logout";
 import Footerr from "../component/user/Footerr";
 import ProductPage from "../component/user/ProductPage";
-import UserSideBar from "../component/user/UserSideBar";
+// import UserSideBar from "../component/user/UserSideBar";
 import ProductDetails from "../component/user/ProductDetails";
 import Cart from "../component/user/Cart";
 import Checkout from "../component/user/Checkout";
-import AllProduct from "../component/user/AllProduct";
+// import AllProduct from "../component/user/AllProduct";
 import NotFoundPage from "../common/NotFoundPage";
 import PaymentSuccess from "../component/user/PaymentSuccess";
 import PaymentFailed from "../component/user/PaymentFailed";
@@ -217,15 +217,15 @@ class Routers extends Component {
             <Route
               history={history}
               exact
-              path="/productPage/:id"
+              path="/productPage"
               element={<ProductPage />}
             />
-            <Route
+            {/* <Route
               history={history}
               exact
               path="/userSideBar"
               element={<UserSideBar />}
-            />
+            /> */}
             <Route
               history={history}
               exact
@@ -245,12 +245,12 @@ class Routers extends Component {
               path="/checkout"
               element={<Checkout />}
             />
-            <Route
+            {/* <Route
               history={history}
               exact
               path="/allProduct"
               element={<AllProduct />}
-            />
+            /> */}
             <Route
               history={history}
               exact
