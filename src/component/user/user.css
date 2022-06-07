@@ -826,3 +826,9 @@ button.loadmore{
 .loginMarging{
   margin-left: inherit !important;
 }
+.css-4ff9q7.Mui-completed {
+  color:#b1d182 !important;
+}
+text.MuiStepIcon-text.css-117w1su-MuiStepIcon-text {
+  display: none !important;
+}
