@@ -183,8 +183,8 @@ class Login extends Component {
                           </p>
                           {/* &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; */}
                           <div
-                            className=" mb-5"
-                            style={{ marginLeft: "34px !important" }}
+                            className="loginMarging mb-5"
+                            style={{ marginLeft: "38px !important" }}
                           >
                             <input
                               className="form-check-input me-2"
@@ -201,25 +201,6 @@ class Login extends Component {
                             </label>
                           </div>
                           <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                            {/* {email == "" || password == "" ? ( */}
-                            {/* <button
-                                type="submit"
-                                style={{
-                                  background: "#688f4e",
-                                  width: "19em",
-                                  border: "none",
-                                  position: "absolute",
-                                  bottom: "26px",
-                                  height: "50px",
-                                  left: "3em",
-                                }}
-                                disabled
-                                className="btn btn-primary "
-                                onClick={this.handleSubmit}
-                              >
-                                Sign In
-                              </button>
-                            ) : ( */}
                             <button
                               type="submit"
                               style={{
@@ -227,7 +208,7 @@ class Login extends Component {
                                 width: "19em",
                                 border: "none",
                                 position: "absolute",
-                                bottom: "26px",
+                                bottom: "8px",
                                 height: "50px",
                                 left: "3em",
                               }}

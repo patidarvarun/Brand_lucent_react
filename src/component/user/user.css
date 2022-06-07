@@ -359,10 +359,10 @@ button.detailPro {
 }
 
 svg.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.MuiStepIcon-root.Mui-completed.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root {
-  color: #b1d182;
+  color: #b1d182 !important;
 }
 svg.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.MuiStepIcon-root.Mui-active.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root {
-  color: #b1d182;
+  color: #b1d182 !important;
 }
 .feildcss {
   padding: 15px;
@@ -382,7 +382,7 @@ svg.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.MuiStepIcon-root.Mui-active.css-1u
 }
 
 .col-md-10.col-lg-6.col-xl-5.order-2.order-lg-1 {
-  margin-top: -70px;
+  margin-top: -46px;
 }
 span.MuiStepLabel-label.Mui-completed.MuiStepLabel-alternativeLabel.css-qivjh0-MuiStepLabel-label {
   font-size: larger;
@@ -819,4 +819,10 @@ button.loadmore{
 }
 .divAlignment{
   text-align: center;
+}
+.css-4ff9q7.Mui-active {
+  color: #b1d182 !important;
+}
+.loginMarging{
+  margin-left: inherit !important;
 }
