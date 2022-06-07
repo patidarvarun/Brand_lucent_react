@@ -252,7 +252,7 @@ class Register extends Component {
                             </div>
                           </div>
 
-                          <div className=" mb-5">
+                          <div className="mb-5 loginMarging">
                             <input
                               className="form-check-input me-2"
                               type="checkbox"
